@@ -232,47 +232,47 @@
      ADD THESE SECTIONS TO YOUR index.html
      ======================================== -->
 
-<!-- 1. ADD ONBOARDING MODAL (After other modals, before closing </body>) -->
-<div class="modal" id="onboardingModal">
-    <div class="modal-content">
-        <div class="onboarding-header">
-            <h2>Welcome to ReKindle! 🔥</h2>
-            <p>Let's personalize your recovery journey</p>
+    <!-- 1. ADD ONBOARDING MODAL (After other modals, before closing </body>) -->
+    <div class="modal" id="onboardingModal">
+        <div class="modal-content">
+            <div class="onboarding-header">
+                <h2>Welcome to ReKindle! 🔥</h2>
+                <p>Let's personalize your recovery journey</p>
+            </div>
+            <form id="onboardingForm" class="modal-form">
+                <div class="form-group">
+                    <label for="onboardingName">What's your name?</label>
+                    <input type="text" id="onboardingName" required placeholder="Enter your name" aria-required="true">
+                </div>
+                
+                <div class="form-group">
+                    <label>What would you like to work on?</label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="goal" value="smoking" id="goalSmoking">
+                        <span>🚭 Quit Smoking/Vaping</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="goal" value="drinking" id="goalDrinking">
+                        <span>🍃 Reduce/Quit Drinking</span>
+                    </label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="motivationReason">What's your main motivation?</label>
+                    <textarea id="motivationReason" rows="2" placeholder="E.g., Health, family, saving money..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="startDate">When did you start your journey?</label>
+                    <input type="date" id="startDate" required aria-required="true">
+                </div>
+                
+                <button type="submit" class="submit-btn">Start My Journey 🚀</button>
+            </form>
         </div>
-        <form id="onboardingForm" class="modal-form">
-            <div class="form-group">
-                <label for="onboardingName">What's your name?</label>
-                <input type="text" id="onboardingName" required placeholder="Enter your name" aria-required="true">
-            </div>
-            
-            <div class="form-group">
-                <label>What would you like to work on?</label>
-                <label class="checkbox-label">
-                    <input type="checkbox" name="goal" value="smoking" id="goalSmoking">
-                    <span>🚭 Quit Smoking/Vaping</span>
-                </label>
-                <label class="checkbox-label">
-                    <input type="checkbox" name="goal" value="drinking" id="goalDrinking">
-                    <span>🍃 Reduce/Quit Drinking</span>
-                </label>
-            </div>
-            
-            <div class="form-group">
-                <label for="motivationReason">What's your main motivation?</label>
-                <textarea id="motivationReason" rows="2" placeholder="E.g., Health, family, saving money..."></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="startDate">When did you start your journey?</label>
-                <input type="date" id="startDate" required aria-required="true">
-            </div>
-            
-            <button type="submit" class="submit-btn">Start My Journey 🚀</button>
-        </form>
     </div>
-</div>
 
-<!-- 2. ADD TABBED PROGRESS VIEW (Replace existing progress section content) -->
+    <!-- COMPLETELY REPLACE your Progress section in index.html with this -->
     <section id="progress" class="page">
         <div class="page-header">
             <h1>Progress Tracker</h1>
@@ -327,42 +327,88 @@
 
         <!-- Tab Content: Weekly -->
         <div class="tab-content" id="tab-weekly" role="tabpanel">
-            <div class="stats-summary">
-                <h3>This Week's Progress</h3>
-                <div class="weekly-chart">
-                    <p>📊 Chart placeholder - Weekly trends</p>
+            <h3>This Week's Progress</h3>
+            
+            <!-- Interactive Chart -->
+            <div class="chart-container">
+                <canvas id="weeklyChart" width="800" height="400"></canvas>
+            </div>
+            
+            <!-- Chart Legend -->
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #8B5CF6;"></span>
+                    <span>Total Cravings</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color" style="background-color: #10B981;"></span>
+                    <span>Resisted</span>
+                </div>
+            </div>
+            
+            <!-- Weekly Summary Stats -->
+            <div class="weekly-summary">
+                <div class="summary-card">
+                    <span class="summary-icon">📊</span>
+                    <div>
+                        <p class="summary-value" id="weeklyTotal">0</p>
+                        <p class="summary-label">Total Logged</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <span class="summary-icon">✨</span>
+                    <div>
+                        <p class="summary-value" id="weeklyResisted">0</p>
+                        <p class="summary-label">Resisted</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <span class="summary-icon">💪</span>
+                    <div>
+                        <p class="summary-value" id="weeklyRate">0%</p>
+                        <p class="summary-label">Success Rate</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Insights Section -->
+            <div class="insights-section">
+                <h4>📈 Weekly Insights</h4>
+                <div id="weeklyInsights" class="insights-list">
+                    <p style="color: var(--text-muted); text-align: center; padding: var(--space-md);">
+                        Loading insights...
+                    </p>
                 </div>
             </div>
         </div>
 
         <!-- Tab Content: Monthly -->
         <div class="tab-content" id="tab-monthly" role="tabpanel">
-            <div class="stats-summary">
-                <h3>Monthly Overview</h3>
-                <div class="progress-stats">
-                    <div class="progress-card">
-                        <h3>Health Improvements</h3>
-                        <div class="health-metrics">
-                            <div class="metric">
-                                <span class="metric-icon">❤️</span>
-                                <div class="metric-info">
-                                    <p class="metric-label">Heart Rate</p>
-                                    <p class="metric-value">Improving</p>
-                                </div>
+            <h3>Monthly Overview</h3>
+            
+            <div class="progress-stats">
+                <div class="progress-card">
+                    <h3>Health Improvements</h3>
+                    <div class="health-metrics">
+                        <div class="metric">
+                            <span class="metric-icon">❤️</span>
+                            <div class="metric-info">
+                                <p class="metric-label">Heart Rate</p>
+                                <p class="metric-value">Improving</p>
                             </div>
-                            <div class="metric">
-                                <span class="metric-icon">🫁</span>
-                                <div class="metric-info">
-                                    <p class="metric-label">Lung Capacity</p>
-                                    <p class="metric-value">Improving</p>
-                                </div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-icon">🫁</span>
+                            <div class="metric-info">
+                                <p class="metric-label">Lung Capacity</p>
+                                <p class="metric-value">Improving</p>
                             </div>
-                            <div class="metric">
-                                <span class="metric-icon">😊</span>
-                                <div class="metric-info">
-                                    <p class="metric-label">Mood</p>
-                                    <p class="metric-value">Better</p>
-                                </div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-icon">😊</span>
+                            <div class="metric-info">
+                                <p class="metric-label">Mood</p>
+                                <p class="metric-value">Better</p>
                             </div>
                         </div>
                     </div>
@@ -985,5 +1031,7 @@
     <script src="js/mock-data.js"></script>
     <script src="js/enhanced-features.js"></script>
     <script src="js/settings.js"></script>
+    <script src="js/interaction.js"></script>
+    <script scr="js/charts.js"></script>
 </body>
 </html>
