@@ -7,7 +7,7 @@ const Translations = {
         nav_emergency: "Emergency",
         nav_help: "Help",
         
-        welcome_back: "Welcome back,",
+        welcome_back: "Welcome back",
         tagline_dashboard: "You're doing amazing today",
         days_smoke_free: "Days Smoke-Free",
         days_alcohol_free: "Days Alcohol-Free",
@@ -170,6 +170,51 @@ const Translations = {
         days_counting: "{{days}} days and counting! Keep going!",
         days_amazing: "{{days}} days! You're doing amazing!",
         days_champion: "{{days}} days! You're a champion!",
+
+        calmbot_struggling_1: "I hear you. Cravings can be really tough. Remember, they're temporary - they usually pass in 5-10 minutes. What usually helps you get through them?",
+        calmbot_struggling_2: "It's okay to struggle. Every moment you're fighting is a moment you're getting stronger. Have you tried the breathing exercise? It might help calm your mind.",
+        calmbot_struggling_3: "I'm here with you. Struggling doesn't mean failing - it means you're trying, and that matters. What triggered this craving?",
+        calmbot_struggling_4: "You're being so brave by reaching out. Cravings are hard, but you've gotten through every single one before this. You can do it again.",
+        
+        calmbot_good_1: "That's wonderful! I'm so proud of you. What's been helping you stay strong today?",
+        calmbot_good_2: "Amazing! Keep up the great work. Every good day is building toward a healthier you.",
+        calmbot_good_3: "I love hearing that! You're doing fantastic. Remember to celebrate these moments.",
+        calmbot_good_4: "That's the spirit! You're proof that recovery is possible. Keep going! 💪",
+        
+        calmbot_tips_1: "Here are some quick tips: 1) Distract yourself with an activity you enjoy, 2) Call a friend or trusted person, 3) Do the breathing exercise, 4) Drink water or have a healthy snack, 5) Go for a short walk. Which one sounds doable right now?",
+        calmbot_tips_2: "When a craving hits: Delay - wait 10 minutes. Distract - do something else. Drink water - stay hydrated. Deep breathe - use our breathing tool. Which strategy would you like to try?",
+        calmbot_tips_3: "Remember the 5 D's: Delay, Distract, Deep breathing, Drink water, Discuss with someone. Want me to walk you through one of these?",
+        calmbot_tips_4: "Physical activity can really help! Even 5 minutes of movement - walking, stretching, or dancing - can reduce cravings. Can you try moving your body a bit?",
+        
+        calmbot_motivation_1: "You are stronger than you know. Every day you choose recovery, you're choosing yourself. That's powerful! 💪",
+        calmbot_motivation_2: "Remember why you started this journey. You deserve a healthy, free life. And you're getting there, one day at a time.",
+        calmbot_motivation_3: "Progress isn't always linear, and that's okay. What matters is that you keep trying. I believe in you! 🌟",
+        calmbot_motivation_4: "Think about how far you've already come. That person who started this journey would be so proud of who you are today. Keep going! ✨",
+        calmbot_motivation_5: "You've already proven you can do hard things. This is just another challenge you'll overcome. I'm rooting for you! 🎯",
+        
+        calmbot_default_1: "I'm here to listen. Tell me what's on your mind.",
+        calmbot_default_2: "How can I support you today?",
+        calmbot_default_3: "I'm listening. What would you like to talk about?",
+        calmbot_default_4: "I'm here for you. What do you need right now?",
+        
+        calmbot_gratitude_1: "You're welcome! I'm always here when you need support. You're doing great! 😊",
+        calmbot_gratitude_2: "Anytime! That's what I'm here for. Keep up the amazing work!",
+        calmbot_gratitude_3: "I'm glad I could help. Remember, you're not alone in this journey. 💚",
+        
+        calmbot_relapse_1: "A slip doesn't erase all your progress. You're not back at square one - you've learned so much. What matters now is what you do next. Are you okay?",
+        calmbot_relapse_2: "Relapses can happen, and they don't define you. This is a learning opportunity, not a failure. Let's figure out what triggered it and how to move forward. You've got this.",
+        calmbot_relapse_3: "I know this feels hard right now, but progress isn't ruined by one setback. You've built so much strength already. Tomorrow is a new day to continue your journey. How can I help you right now?",
+        
+        calmbot_emergency_1: "If you're in crisis, please reach out to a professional immediately. You can call the NCMH Crisis Hotline at 0917-899-8727. You're important, and help is available. 💚",
+        calmbot_emergency_2: "I'm concerned about you. Please contact a crisis hotline or trusted person right away. NCMH: 0917-899-8727 | In Touch: (02) 8893-7603. You deserve support.",
+        calmbot_emergency_3: "Your safety is the priority. Please call a crisis line now: NCMH 0917-899-8727. I care about you, and professional help is available 24/7.",
+        
+        calmbot_stats_intro: "Let me share your progress with you! 📊",
+        calmbot_stats_smoking: "🚭 You've been smoke-free for {{days}} days! ",
+        calmbot_stats_drinking: "🍃 You've been alcohol-free for {{days}} days! ",
+        calmbot_stats_resisted: "💪 You've resisted {{count}} cravings so far. That's incredible strength!",
+        calmbot_stats_money: "💰 You've saved ₱{{amount}} by staying clean. Think about what you could do with that!",
+        calmbot_stats_outro: "You should be really proud of yourself. Keep up the amazing work! 🌟",
     },
     
     fil: {
@@ -180,7 +225,7 @@ const Translations = {
         nav_emergency: "Emerhensiya",
         nav_help: "Tulong",
         
-        welcome_back: "Maligayang pagbabalik,",
+        welcome_back: "Maligayang pagbabalik",
         tagline_dashboard: "Ang galing mo ngayong araw",
         days_smoke_free: "Araw na Walang Sigarilyo",
         days_alcohol_free: "Araw na Walang Alak",
@@ -343,6 +388,51 @@ const Translations = {
         days_counting: "{{days}} araw at patuloy! Magpatuloy!",
         days_amazing: "{{days}} araw! Ang galing mo!",
         days_champion: "{{days}} araw! Champion ka!",
+
+        calmbot_struggling_1: "Naiintindihan kita. Ang pagnanasa ay talagang mahirap. Tandaan, pansamantala lang ito - karaniwang lumilipas sa loob ng 5-10 minuto. Ano ba ang tumutulong sa iyo na makaraos?",
+        calmbot_struggling_2: "Okay lang na mahirapan. Bawat sandaling lumalaban ka ay sandaling lumalaki ang lakas mo. Nasubukan mo na ba ang ehersisyo sa paghinga? Makakatulong ito na pakalmahin ang isip mo.",
+        calmbot_struggling_3: "Nandito ako para sa iyo. Ang paghihirap ay hindi ibig sabihin na nabigo ka - ibig sabihin ay sinusubukan mo, at mahalaga iyon. Ano ang nag-trigger ng pagnanasang ito?",
+        calmbot_struggling_4: "Napakalakas mo sa paghingi ng tulong. Mahirap ang pagnanasa, ngunit nalagpasan mo na ang lahat ng nakaraan. Kaya mo ulit ito.",
+        
+        calmbot_good_1: "Kamangha-mangha! Ipinagmamalaki kita. Ano ang tumutulong sa iyo na manatiling malakas ngayong araw?",
+        calmbot_good_2: "Napakagaling! Ipagpatuloy ang mahusay na gawa. Bawat magandang araw ay bumubuo ng mas malusog na ikaw.",
+        calmbot_good_3: "Natutuwa akong marinig yan! Mahusay ka. Tandaang ipagdiwang ang mga sandaling ito.",
+        calmbot_good_4: "Yan ang tamang diwa! Ikaw ay patunay na posible ang pagbabago. Magpatuloy! 💪",
+        
+        calmbot_tips_1: "Narito ang ilang mabilis na tip: 1) Mag-distract sa isang aktibidad na gusto mo, 2) Tumawag sa kaibigan o pinagkakatiwalaang tao, 3) Gawin ang ehersisyo sa paghinga, 4) Uminom ng tubig o kumain ng malusog, 5) Maglakad sandali. Alin ang tila kaya mo ngayon?",
+        calmbot_tips_2: "Kapag may pagnanasa: Delay - maghintay ng 10 minuto. Distract - gumawa ng iba. Drink water - manatiling hydrated. Deep breathe - gamitin ang breathing tool. Aling estratehiya ang gusto mong subukan?",
+        calmbot_tips_3: "Tandaan ang 5 D's: Delay, Distract, Deep breathing, Drink water, Discuss sa iba. Gusto mo bang tulungan kita sa isa sa mga ito?",
+        calmbot_tips_4: "Ang pisikal na aktibidad ay talagang makakatulong! Kahit 5 minuto ng paggalaw - paglalakad, pag-stretch, o pagsayaw - ay maaaring magbawas ng pagnanasa. Kaya mo bang subukan gumalaw ng kaunti?",
+        
+        calmbot_motivation_1: "Mas malakas ka kaysa sa alam mo. Bawat araw na pipiliin mo ang pagbabago, pinipili mo ang iyong sarili. Makapangyarihan yan! 💪",
+        calmbot_motivation_2: "Alalahanin mo kung bakit mo sinimulan ang paglalakbay na ito. Karapat-dapat ka sa malusog at malayang buhay. At papunta ka na doon, isang araw sa isang pagkakataon.",
+        calmbot_motivation_3: "Ang progreso ay hindi palaging direkta, at okay lang yan. Ang mahalaga ay patuloy kang sumusubok. Naniniwala ako sa iyo! 🌟",
+        calmbot_motivation_4: "Isipin mo kung gaano kalayo na ang narating mo. Ang taong nagsimula ng paglalakbay na ito ay magiging napaka-proud sa kung sino ka ngayon. Magpatuloy! ✨",
+        calmbot_motivation_5: "Napatunayan mo na kaya mong gawin ang mahihirap na bagay. Isa lang itong hamon na malampasan mo. Sumusuporta ako sa iyo! 🎯",
+        
+        calmbot_default_1: "Nandito ako para makinig. Sabihin mo sa akin kung ano ang nasa isip mo.",
+        calmbot_default_2: "Paano kita masusuportahan ngayong araw?",
+        calmbot_default_3: "Nakikinig ako. Tungkol saan mo gustong pag-usapan?",
+        calmbot_default_4: "Nandito ako para sa iyo. Ano ang kailangan mo ngayon?",
+        
+        calmbot_gratitude_1: "Walang anuman! Lagi akong nandito kapag kailangan mo ng suporta. Mahusay ka! 😊",
+        calmbot_gratitude_2: "Kahit kailan! Para dyan ako nandito. Ipagpatuloy ang napakagandang gawa!",
+        calmbot_gratitude_3: "Natutuwa akong nakatulong ako. Tandaan, hindi ka nag-iisa sa paglalakbay na ito. 💚",
+        
+        calmbot_relapse_1: "Ang pagkakamali ay hindi pumapawi sa lahat ng iyong progreso. Hindi ka bumalik sa simula - natutunan mo na ang napakarami. Ang mahalaga ngayon ay kung ano ang gagawin mo susunod. Okay ka lang ba?",
+        calmbot_relapse_2: "Ang relapse ay maaaring mangyari, at hindi ka nito tinukoy. Ito ay pagkakataon na matuto, hindi pagkabigo. Alamin natin kung ano ang nag-trigger at paano magpatuloy. Kaya mo ito.",
+        calmbot_relapse_3: "Alam kong mahirap ito ngayon, ngunit ang progreso ay hindi nasira ng isang pagbagsak. Marami ka nang naipon na lakas. Bukas ay bagong araw upang ipagpatuloy ang iyong paglalakbay. Paano kita matutulungan ngayon?",
+        
+        calmbot_emergency_1: "Kung ikaw ay nasa krisis, mangyaring makipag-ugnayan sa propesyonal kaagad. Maaari kang tumawag sa NCMH Crisis Hotline sa 0917-899-8727. Mahalaga ka, at available ang tulong. 💚",
+        calmbot_emergency_2: "Nag-aalala ako sa iyo. Mangyaring makipag-ugnayan sa crisis hotline o pinagkakatiwalaang tao kaagad. NCMH: 0917-899-8727 | In Touch: (02) 8893-7603. Karapat-dapat ka ng suporta.",
+        calmbot_emergency_3: "Ang iyong kaligtasan ang priyoridad. Mangyaring tumawag sa crisis line ngayon: NCMH 0917-899-8727. Mahalaga ka sa akin, at available ang propesyonal na tulong 24/7.",
+        
+        calmbot_stats_intro: "Ibabahagi ko ang iyong progreso! 📊",
+        calmbot_stats_smoking: "🚭 {{days}} araw ka nang walang sigarilyo! ",
+        calmbot_stats_drinking: "🍃 {{days}} araw ka nang walang alak! ",
+        calmbot_stats_resisted: "💪 Nilabanan mo na ang {{count}} pagnanasa. Napakalakas mo!",
+        calmbot_stats_money: "💰 Nag-ipon ka na ng ₱{{amount}} sa pamamagitan ng pananatiling malinis. Isipin mo ang magagawa mo niyan!",
+        calmbot_stats_outro: "Dapat kang ipagmalaki ang iyong sarili. Ipagpatuloy ang napakagandang gawa! 🌟",
     },
     
     currentLanguage: 'en',

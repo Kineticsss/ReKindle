@@ -137,12 +137,19 @@ const EnhancedSettings = {
 
         const languageSelect = document.getElementById('languageSelect');
         if (languageSelect) {
-            languageSelect.value = this.defaults.language;
+            languageSelect.value = AppData.user.language || 'en';
             languageSelect.addEventListener('change', (e) => {
-                this.defaults.language = e.target.value;
-                AppData.user.language = e.target.value;
+                const newLang = e.target.value;
+                AppData.user.language = newLang;
+                this.defaults.language = newLang;
                 this.saveSettings();
                 AppData.save();
+
+
+                if (window.Translations) {
+                    Translations.setLanguage(newLang);
+                }
+                
                 Navigation.showNotification('Language updated!', 'success', 2000);
             });
         }
