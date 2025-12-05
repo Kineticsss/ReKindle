@@ -282,7 +282,7 @@ const CalmBot = {
 
     getResponseByType(type) {
         const responses = this.getResponses();
-        if (this.responses[type]) {
+        if (responses[type]) {
             return this.getRandomResponse(responses[type]);
         }
         return this.getRandomResponse(responses.default);

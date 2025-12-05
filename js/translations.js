@@ -470,20 +470,176 @@ const Translations = {
     },
     
     applyTranslations() {
-        document.querySelectorAll('[data-i18n]').forEach(element => {
-            const key = element.getAttribute('data-i18n');
-            const translation = this.t(key);
-            
-            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                if (element.hasAttribute('placeholder')) {
-                    element.placeholder = translation;
-                }
-            } else {
-                element.textContent = translation;
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const translation = this.t(key);
+        
+        if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+            if (element.hasAttribute('placeholder')) {
+                element.placeholder = translation;
             }
-        });
+        } else {
+            element.textContent = translation;
+        }
+    });
 
-        this.updateDynamicContent();
+    const navTranslations = {
+        'dashboard': this.t('nav_dashboard'),
+        'motivation': this.t('nav_motivation'),
+        'progress': this.t('nav_progress'),
+        'calmbot': this.t('nav_calmbot'),
+        'emergency': this.t('nav_emergency'),
+        'help': this.t('nav_help')
+    };
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        const page = link.getAttribute('data-page');
+        if (page && navTranslations[page]) {
+            link.textContent = navTranslations[page];
+        }
+    });
+
+        this.updatePageHeaders();
+        
+        this.updateDashboardStats();
+        
+        this.updateButtons();
+        
+        this.updateModals();
+        
+        this.updateProgressTabs();
+        
+        this.updateCalmBot();
+    },
+
+    updatePageHeaders() {
+        const dashboardHeader = document.querySelector('#dashboard .page-header h1');
+        if (dashboardHeader) {
+            const userName = document.getElementById('userName')?.textContent || 'Friend';
+            dashboardHeader.innerHTML = `${this.t('welcome_back')}, <span id="userName">${userName}</span>! 👋`;
+        }
+        const dashboardTagline = document.querySelector('#dashboard .tagline');
+        if (dashboardTagline) dashboardTagline.textContent = this.t('tagline_dashboard');
+
+        const motivationHeader = document.querySelector('#motivation .page-header h1');
+        if (motivationHeader) motivationHeader.textContent = this.t('motivation_wall');
+        const motivationTagline = document.querySelector('#motivation .tagline');
+        if (motivationTagline) motivationTagline.textContent = this.t('tagline_motivation');
+
+        const progressHeader = document.querySelector('#progress .page-header h1');
+        if (progressHeader) progressHeader.textContent = this.t('progress_tracker');
+        const progressTagline = document.querySelector('#progress .tagline');
+        if (progressTagline) progressTagline.textContent = this.t('tagline_progress');
+
+        const calmbotHeader = document.querySelector('#calmbot .page-header h1');
+        if (calmbotHeader) calmbotHeader.textContent = this.t('calmbot_title') + ' 🤖';
+        const calmbotTagline = document.querySelector('#calmbot .tagline');
+        if (calmbotTagline) calmbotTagline.textContent = this.t('tagline_calmbot');
+
+        const emergencyHeader = document.querySelector('#emergency .page-header h1');
+        if (emergencyHeader) emergencyHeader.textContent = this.t('emergency_support');
+        const emergencyTagline = document.querySelector('#emergency .tagline');
+        if (emergencyTagline) emergencyTagline.textContent = this.t('tagline_emergency');
+
+        const helpHeader = document.querySelector('#help .page-header h1');
+        if (helpHeader) helpHeader.textContent = this.t('help_tips');
+        const helpTagline = document.querySelector('#help .tagline');
+        if (helpTagline) helpTagline.textContent = this.t('tagline_help');
+    },
+
+    updateDashboardStats() {
+        const statLabels = document.querySelectorAll('.stat-label');
+        if (statLabels[0]) statLabels[0].textContent = this.t('days_smoke_free');
+        if (statLabels[1]) statLabels[1].textContent = this.t('days_alcohol_free');
+        if (statLabels[2]) statLabels[2].textContent = this.t('money_saved');
+        if (statLabels[3]) statLabels[3].textContent = this.t('cravings_resisted');
+
+        const journeyH2 = document.querySelector('.journey-section h2');
+        if (journeyH2) journeyH2.textContent = this.t('your_recovery_journey');
+
+        const pathTitles = document.querySelectorAll('.path-title');
+        if (pathTitles[0]) pathTitles[0].textContent = this.t('smoking_recovery');
+        if (pathTitles[1]) pathTitles[1].textContent = this.t('alcohol_recovery');
+
+        const quickActionsH2 = document.querySelector('.quick-actions h2');
+        if (quickActionsH2) quickActionsH2.textContent = this.t('quick_actions');
+
+        const achievementsH2 = document.querySelector('.achievements-preview h2');
+        if (achievementsH2) achievementsH2.textContent = this.t('recent_achievements');
+    },
+
+    updateButtons() {
+        const logCravingBtn = document.querySelector('#logCravingBtn .btn-text');
+        if (logCravingBtn) logCravingBtn.textContent = this.t('log_craving');
+
+        const breathingBtn = document.querySelector('#breathingBtn .btn-text');
+        if (breathingBtn) breathingBtn.textContent = this.t('breathing_exercise');
+
+        const motivationBtn = document.querySelector('#motivationQuickBtn .btn-text');
+        if (motivationBtn) motivationBtn.textContent = this.t('find_motivation');
+    },
+
+    updateModals() {
+        const cravingModalTitle = document.querySelector('#cravingModal .modal-header h2');
+        if (cravingModalTitle) cravingModalTitle.textContent = this.t('log_craving_title');
+
+        const cravingLabels = document.querySelectorAll('#cravingForm label');
+        if (cravingLabels[0]) cravingLabels[0].textContent = this.t('type');
+        if (cravingLabels[1]) cravingLabels[1].innerHTML = `${this.t('intensity')}: <span id="intensityValue">5</span>/10`;
+        if (cravingLabels[2]) cravingLabels[2].textContent = this.t('what_triggered');
+        if (cravingLabels[3]) cravingLabels[3].textContent = this.t('notes');
+
+        const breathingModalTitle = document.querySelector('#breathingModal h2');
+        if (breathingModalTitle) breathingModalTitle.textContent = this.t('breathing_title');
+
+        const breathingInstruction = document.getElementById('breathingInstruction');
+        if (breathingInstruction && breathingInstruction.textContent === 'Get ready...') {
+            breathingInstruction.textContent = this.t('get_ready');
+        }
+
+        const startBreathingBtn = document.getElementById('startBreathingBtn');
+        if (startBreathingBtn && startBreathingBtn.textContent === 'Start Exercise') {
+            startBreathingBtn.textContent = this.t('start_exercise');
+        }
+
+        const settingsTitle = document.querySelector('#settingsModal .modal-header h2');
+        if (settingsTitle) settingsTitle.textContent = '⚙️ ' + this.t('settings');
+    },
+
+    updateProgressTabs() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        if (tabButtons[0]) tabButtons[0].innerHTML = `📅 ${this.t('tab_daily')}`;
+        if (tabButtons[1]) tabButtons[1].innerHTML = `📊 ${this.t('tab_weekly')}`;
+        if (tabButtons[2]) tabButtons[2].innerHTML = `📈 ${this.t('tab_monthly')}`;
+        if (tabButtons[3]) tabButtons[3].innerHTML = `🏆 ${this.t('tab_all')}`;
+
+        const todaySummary = document.querySelector('#tab-daily h3');
+        if (todaySummary) todaySummary.textContent = this.t('today_summary');
+
+        const weeklyH3 = document.querySelector('#tab-weekly h3');
+        if (weeklyH3) weeklyH3.textContent = this.t('this_week_progress');
+
+        const monthlyH3 = document.querySelector('#tab-monthly h3');
+        if (monthlyH3) monthlyH3.textContent = this.t('monthly_overview');
+    },
+
+    updateCalmBot() {
+        const chatMessages = document.getElementById('chatMessages');
+        if (chatMessages) {
+            const botGreeting = chatMessages.querySelector('.chat-message.bot .message-bubble p');
+            if (botGreeting && botGreeting.textContent.includes("Hi there! I'm CalmBot")) {
+                botGreeting.textContent = this.t('calmbot_greeting');
+            }
+        }
+
+        const quickResponseBtns = document.querySelectorAll('.quick-response-btn');
+        if (quickResponseBtns[0]) quickResponseBtns[0].textContent = this.t('struggling_cravings');
+        if (quickResponseBtns[1]) quickResponseBtns[1].textContent = this.t('doing_well');
+        if (quickResponseBtns[2]) quickResponseBtns[2].textContent = this.t('need_tips');
+        if (quickResponseBtns[3]) quickResponseBtns[3].textContent = this.t('need_motivation');
+
+        const chatInput = document.getElementById('chatInput');
+        if (chatInput) chatInput.placeholder = this.t('type_message');
     },
     
     updateDynamicContent() {
