@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ReKindle - Recovery Companion App
 ## HCI Final Project
 
@@ -379,4 +378,3 @@ This is an academic project for educational purposes.
 =======
 # ReKindle
 An application made to rekindle the fire in your heart.
->>>>>>> 28342cfdc54a388fff19236d31e85c0a36380b06
