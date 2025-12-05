@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReKindle - Your Recovery Companion</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🔥</span>
+                <span class="logo-text">ReKindle</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#dashboard" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                <li><a href="#motivation" class="nav-link" data-page="motivation">Motivation</a></li>
+                <li><a href="#progress" class="nav-link" data-page="progress">Progress</a></li>
+                <li><a href="#calmbot" class="nav-link" data-page="calmbot">CalmBot</a></li>
+                <li><a href="#emergency" class="nav-link" data-page="emergency">Emergency</a></li>
+            </ul>
+            <button class="settings-btn" id="settingsBtn" aria-label="Settings">⚙️</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Page -->
+        <section id="dashboard" class="page active">
+            <div class="page-header">
+                <h1 class="welcome-text">Welcome back, <span id="userName">Friend</span>! 👋</h1>
+                <p class="tagline">You're doing amazing today</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card glow">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-info">
+                        <h3 class="stat-value" id="smokingStreak">0</h3>
+                        <p class="stat-label">Days Smoke-Free</p>
+                    </div>
+                </div>
+
+                <div class="stat-card glow">
+                    <div class="stat-icon">🍃</div>
+                    <div class="stat-info">
+                        <h3 class="stat-value" id="drinkingStreak">0</h3>
+                        <p class="stat-label">Days Alcohol-Free</p>
+                    </div>
+                </div>
+
+                <div class="stat-card glow">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <h3 class="stat-value" id="moneySaved">₱0</h3>
+                        <p class="stat-label">Money Saved</p>
+                    </div>
+                </div>
+
+                <div class="stat-card glow">
+                    <div class="stat-icon">💪</div>
+                    <div class="stat-info">
+                        <h3 class="stat-value" id="cravingsResisted">0</h3>
+                        <p class="stat-label">Cravings Resisted</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="journey-section">
+                <h2>Your Recovery Journey</h2>
+                <div class="journey-paths">
+                    <div class="journey-path">
+                        <div class="path-header">
+                            <span class="path-icon">🚭</span>
+                            <span class="path-title">Smoking Recovery</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="smokingProgress" style="width: 0%"></div>
+                        </div>
+                        <p class="path-status" id="smokingStatus">Just starting your journey</p>
+                    </div>
+
+                    <div class="journey-path">
+                        <div class="path-header">
+                            <span class="path-icon">🍺</span>
+                            <span class="path-title">Alcohol Recovery</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="drinkingProgress" style="width: 0%"></div>
+                        </div>
+                        <p class="path-status" id="drinkingStatus">Just starting your journey</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-grid">
+                    <button class="action-btn primary" id="logCravingBtn">
+                        <span class="btn-icon">📝</span>
+                        <span class="btn-text">Log Craving</span>
+                    </button>
+                    <button class="action-btn secondary" id="breathingBtn">
+                        <span class="btn-icon">🫁</span>
+                        <span class="btn-text">Breathing Exercise</span>
+                    </button>
+                    <button class="action-btn tertiary" id="motivationQuickBtn">
+                        <span class="btn-icon">✨</span>
+                        <span class="btn-text">Get Motivated</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="achievements-preview">
+                <h2>Recent Achievements</h2>
+                <div class="achievement-list" id="achievementList">
+                    <div class="achievement-item locked">
+                        <span class="achievement-icon">🏆</span>
+                        <div class="achievement-info">
+                            <p class="achievement-name">First Day</p>
+                            <p class="achievement-desc">Complete your first day clean</p>
+                        </div>
+                    </div>
+                    <div class="achievement-item locked">
+                        <span class="achievement-icon">⭐</span>
+                        <div class="achievement-info">
+                            <p class="achievement-name">Week Warrior</p>
+                            <p class="achievement-desc">Stay clean for 7 days</p>
+                        </div>
+                    </div>
+                    <div class="achievement-item locked">
+                        <span class="achievement-icon">💎</span>
+                        <div class="achievement-info">
+                            <p class="achievement-name">Month Master</p>
+                            <p class="achievement-desc">Achieve 30 days of recovery</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Motivation Page -->
+        <section id="motivation" class="page">
+            <div class="page-header">
+                <h1>Motivation Wall</h1>
+                <p class="tagline">Find strength in every moment</p>
+            </div>
+
+            <div class="motivation-grid">
+                <div class="motivation-card">
+                    <div class="quote-icon">💪</div>
+                    <p class="quote-text">"Every moment you resist is a victory."</p>
+                    <p class="quote-author">— You, being stronger</p>
+                </div>
+
+                <div class="motivation-card">
+                    <div class="quote-icon">🌟</div>
+                    <p class="quote-text">"Recovery is not linear, and that's okay."</p>
+                    <p class="quote-author">— Your journey</p>
+                </div>
+
+                <div class="motivation-card">
+                    <div class="quote-icon">🌈</div>
+                    <p class="quote-text">"Small steps lead to big changes."</p>
+                    <p class="quote-author">— Daily wisdom</p>
+                </div>
+
+                <div class="motivation-card">
+                    <div class="quote-icon">💚</div>
+                    <p class="quote-text">"You deserve a healthier, happier life."</p>
+                    <p class="quote-author">— Self-compassion</p>
+                </div>
+
+                <div class="motivation-card">
+                    <div class="quote-icon">🔥</div>
+                    <p class="quote-text">"Ang lakas mo ay nasa loob mo."</p>
+                    <p class="quote-author">— Pag-asa</p>
+                </div>
+
+                <div class="motivation-card">
+                    <div class="quote-icon">🌸</div>
+                    <p class="quote-text">"Healing takes time, be patient with yourself."</p>
+                    <p class="quote-author">— Gentle reminder</p>
+                </div>
+            </div>
+
+            <div class="community-section">
+                <h2>Community Encouragement</h2>
+                <div class="community-posts">
+                    <div class="community-post">
+                        <div class="post-avatar">👤</div>
+                        <div class="post-content">
+                            <p class="post-author">Anonymous User</p>
+                            <p class="post-text">Just hit 30 days! To anyone struggling today: it gets easier. Keep going! 💪</p>
+                            <div class="post-reactions">
+                                <span>❤️ 24</span>
+                                <span>💪 18</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="community-post">
+                        <div class="post-avatar">👤</div>
+                        <div class="post-content">
+                            <p class="post-author">Recovery Warrior</p>
+                            <p class="post-text">Had a tough day but I didn't give in. This app really helps. Thank you all! 🙏</p>
+                            <div class="post-reactions">
+                                <span>❤️ 31</span>
+                                <span>🔥 15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Page -->
+        <section id="progress" class="page">
+            <div class="page-header">
+                <h1>Progress Tracker</h1>
+                <p class="tagline">Visualize your journey</p>
+            </div>
+
+            <div class="progress-stats">
+                <div class="progress-card">
+                    <h3>Health Improvements</h3>
+                    <div class="health-metrics">
+                        <div class="metric">
+                            <span class="metric-icon">❤️</span>
+                            <div class="metric-info">
+                                <p class="metric-label">Heart Rate</p>
+                                <p class="metric-value">Improving</p>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-icon">🫁</span>
+                            <div class="metric-info">
+                                <p class="metric-label">Lung Capacity</p>
+                                <p class="metric-value">Improving</p>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-icon">😊</span>
+                            <div class="metric-info">
+                                <p class="metric-label">Mood</p>
+                                <p class="metric-value">Better</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-card">
+                    <h3>Milestones Achieved</h3>
+                    <div class="milestones-list">
+                        <div class="milestone completed">
+                            <span class="milestone-icon">✅</span>
+                            <p>24 Hours Clean</p>
+                        </div>
+                        <div class="milestone locked">
+                            <span class="milestone-icon">🔒</span>
+                            <p>3 Days Clean</p>
+                        </div>
+                        <div class="milestone locked">
+                            <span class="milestone-icon">🔒</span>
+                            <p>1 Week Clean</p>
+                        </div>
+                        <div class="milestone locked">
+                            <span class="milestone-icon">🔒</span>
+                            <p>1 Month Clean</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <h2>Craving Trends</h2>
+                <div class="chart-container">
+                    <canvas id="cravingChart"></canvas>
+                    <div class="chart-placeholder">
+                        <p>📊 Your craving trends will appear here</p>
+                        <p class="chart-subtitle">Start logging to see your progress</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="log-history">
+                <h2>Recent Logs</h2>
+                <div class="log-list" id="logHistory">
+                    <p class="empty-state">No logs yet. Start by logging your first craving!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CalmBot Page -->
+        <section id="calmbot" class="page">
+            <div class="page-header">
+                <h1>CalmBot 🤖</h1>
+                <p class="tagline">Your AI companion for support</p>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message bot">
+                        <div class="message-avatar">🤖</div>
+                        <div class="message-bubble">
+                            <p>Hi there! I'm CalmBot, your supportive companion. How are you feeling today?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-responses">
+                    <button class="quick-response-btn" data-response="struggling">I'm struggling with cravings</button>
+                    <button class="quick-response-btn" data-response="good">I'm doing well today</button>
+                    <button class="quick-response-btn" data-response="tips">I need coping tips</button>
+                    <button class="quick-response-btn" data-response="motivation">I need motivation</button>
+                </div>
+
+                <div class="chat-input-container">
+                    <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." aria-label="Chat message">
+                    <button class="send-btn" id="sendBtn" aria-label="Send message">
+                        <span>➤</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Page -->
+        <section id="emergency" class="page">
+            <div class="page-header emergency-header">
+                <h1>Emergency Support</h1>
+                <p class="tagline">Help is always available</p>
+            </div>
+
+            <div class="emergency-actions">
+                <button class="emergency-btn breathing-emergency">
+                    <span class="emergency-icon">🫁</span>
+                    <div class="emergency-text">
+                        <h3>Start Breathing Exercise</h3>
+                        <p>Calm your mind in 2 minutes</p>
+                    </div>
+                </button>
+
+                <button class="emergency-btn calmbot-emergency">
+                    <span class="emergency-icon">🤖</span>
+                    <div class="emergency-text">
+                        <h3>Talk to CalmBot</h3>
+                        <p>Get immediate support</p>
+                    </div>
+                </button>
+            </div>
+
+            <div class="hotlines-section">
+                <h2>Crisis Hotlines</h2>
+                <div class="hotlines-list">
+                    <div class="hotline-card">
+                        <div class="hotline-icon">📞</div>
+                        <div class="hotline-info">
+                            <h3>NCMH Crisis Hotline</h3>
+                            <p class="hotline-number">0917-899-8727</p>
+                            <p class="hotline-desc">24/7 Mental Health Support</p>
+                        </div>
+                        <button class="call-btn" aria-label="Call NCMH">Call</button>
+                    </div>
+
+                    <div class="hotline-card">
+                        <div class="hotline-icon">📞</div>
+                        <div class="hotline-info">
+                            <h3>In Touch Crisis Line</h3>
+                            <p class="hotline-number">(02) 8893-7603</p>
+                            <p class="hotline-desc">Counseling & Support</p>
+                        </div>
+                        <button class="call-btn" aria-label="Call In Touch">Call</button>
+                    </div>
+
+                    <div class="hotline-card">
+                        <div class="hotline-icon">📞</div>
+                        <div class="hotline-info">
+                            <h3>DOH Helpline</h3>
+                            <p class="hotline-number">1555</p>
+                            <p class="hotline-desc">Department of Health Support</p>
+                        </div>
+                        <button class="call-btn" aria-label="Call DOH">Call</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trusted-contacts">
+                <h2>Trusted Contacts</h2>
+                <button class="add-contact-btn" id="addContactBtn">
+                    <span>+</span> Add Trusted Contact
+                </button>
+                <div class="contacts-list" id="contactsList">
+                    <p class="empty-state">Add someone you trust for quick access during tough moments</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <!-- Craving Log Modal -->
+    <div class="modal" id="cravingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Log Craving</h2>
+                <button class="close-modal" data-modal="cravingModal" aria-label="Close modal">&times;</button>
+            </div>
+            <form id="cravingForm" class="modal-form">
+                <div class="form-group">
+                    <label for="cravingType">Type</label>
+                    <select id="cravingType" required>
+                        <option value="">Select type</option>
+                        <option value="smoking">Smoking/Vaping</option>
+                        <option value="drinking">Alcohol</option>
+                        <option value="both">Both</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="cravingIntensity">Intensity: <span id="intensityValue">5</span>/10</label>
+                    <input type="range" id="cravingIntensity" min="1" max="10" value="5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cravingTrigger">What triggered it?</label>
+                    <select id="cravingTrigger" required>
+                        <option value="">Select trigger</option>
+                        <option value="stress">Stress</option>
+                        <option value="social">Social Setting</option>
+                        <option value="boredom">Boredom</option>
+                        <option value="habit">Habit/Routine</option>
+                        <option value="emotion">Strong Emotion</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="cravingNotes">Notes (optional)</label>
+                    <textarea id="cravingNotes" rows="3" placeholder="How are you feeling?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="resistedCraving">
+                        <span>I resisted this craving ✨</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">Save Log</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Breathing Exercise Modal -->
+    <div class="modal" id="breathingModal">
+        <div class="modal-content breathing-content">
+            <button class="close-modal" data-modal="breathingModal" aria-label="Close">&times;</button>
+            <div class="breathing-exercise">
+                <h2>Breathing Exercise</h2>
+                <p class="breathing-instruction" id="breathingInstruction">Get ready...</p>
+                <div class="breathing-circle" id="breathingCircle">
+                    <div class="breathing-text" id="breathingText">Start</div>
+                </div>
+                <button class="start-breathing-btn" id="startBreathingBtn">Start Exercise</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="close-modal" data-modal="settingsModal" aria-label="Close">&times;</button>
+            </div>
+            <div class="settings-content">
+                <div class="setting-group">
+                    <label for="userNameInput">Your Name</label>
+                    <input type="text" id="userNameInput" placeholder="Enter your name">
+                </div>
+
+                <div class="setting-group">
+                    <label for="languageSelect">Language</label>
+                    <select id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="fil">Filipino</option>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="notificationsToggle" checked>
+                        <span>Enable Notifications</span>
+                    </label>
+                </div>
+
+                <div class="setting-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="soundToggle" checked>
+                        <span>Sound Effects</span>
+                    </label>
+                </div>
+
+                <button class="danger-btn" id="resetDataBtn">Reset All Data</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/craving-log.js"></script>
+    <script src="js/breathing.js"></script>
+    <script src="js/calmbot.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
