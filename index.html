@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/enhanced-features.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -27,6 +28,21 @@
                 <li><a href="#progress" class="nav-link" data-page="progress">Progress</a></li>
                 <li><a href="#calmbot" class="nav-link" data-page="calmbot">CalmBot</a></li>
                 <li><a href="#emergency" class="nav-link" data-page="emergency">Emergency</a></li>
+                <li><a href="#help" class="nav-link" data-page="help">Help</a></li>
+                <div class="accessibility-controls">
+                    <button id="decreaseText" class="accessibility-btn" aria-label="Decrease text size" title="Smaller text">
+                        A-
+                    </button>
+                    <button id="resetText" class="accessibility-btn" aria-label="Reset text size" title="Normal text">
+                        A
+                    </button>
+                    <button id="increaseText" class="accessibility-btn" aria-label="Increase text size" title="Larger text">
+                        A+
+                    </button>
+                    <button id="highContrast" class="accessibility-btn" aria-label="Toggle high contrast mode" title="High contrast">
+                        ◐
+                    </button>
+                </div>
             </ul>
             <button class="settings-btn" id="settingsBtn" aria-label="Settings">⚙️</button>
         </div>
@@ -224,40 +240,151 @@
         </section>
 
         <!-- Progress Page -->
-        <section id="progress" class="page">
-            <div class="page-header">
-                <h1>Progress Tracker</h1>
-                <p class="tagline">Visualize your journey</p>
-            </div>
+       <!-- ========================================
+     ADD THESE SECTIONS TO YOUR index.html
+     ======================================== -->
 
-            <div class="progress-stats">
-                <div class="progress-card">
-                    <h3>Health Improvements</h3>
-                    <div class="health-metrics">
-                        <div class="metric">
-                            <span class="metric-icon">❤️</span>
-                            <div class="metric-info">
-                                <p class="metric-label">Heart Rate</p>
-                                <p class="metric-value">Improving</p>
-                            </div>
+<!-- 1. ADD ONBOARDING MODAL (After other modals, before closing </body>) -->
+<div class="modal" id="onboardingModal">
+    <div class="modal-content">
+        <div class="onboarding-header">
+            <h2>Welcome to ReKindle! 🔥</h2>
+            <p>Let's personalize your recovery journey</p>
+        </div>
+        <form id="onboardingForm" class="modal-form">
+            <div class="form-group">
+                <label for="onboardingName">What's your name?</label>
+                <input type="text" id="onboardingName" required placeholder="Enter your name" aria-required="true">
+            </div>
+            
+            <div class="form-group">
+                <label>What would you like to work on?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="goal" value="smoking" id="goalSmoking">
+                    <span>🚭 Quit Smoking/Vaping</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="goal" value="drinking" id="goalDrinking">
+                    <span>🍃 Reduce/Quit Drinking</span>
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label for="motivationReason">What's your main motivation?</label>
+                <textarea id="motivationReason" rows="2" placeholder="E.g., Health, family, saving money..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="startDate">When did you start your journey?</label>
+                <input type="date" id="startDate" required aria-required="true">
+            </div>
+            
+            <button type="submit" class="submit-btn">Start My Journey 🚀</button>
+        </form>
+    </div>
+</div>
+
+<!-- 2. ADD TABBED PROGRESS VIEW (Replace existing progress section content) -->
+    <section id="progress" class="page">
+        <div class="page-header">
+            <h1>Progress Tracker</h1>
+            <p class="tagline">Visualize your journey</p>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs" role="tablist">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-daily" data-tab="daily">
+                📅 Daily
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-weekly" data-tab="weekly">
+                📊 Weekly
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-monthly" data-tab="monthly">
+                📈 Monthly
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-all" data-tab="all">
+                🏆 All Time
+            </button>
+        </div>
+
+        <!-- Tab Content: Daily -->
+        <div class="tab-content active" id="tab-daily" role="tabpanel">
+            <div class="stats-summary">
+                <h3>Today's Summary</h3>
+                <div class="daily-stats">
+                    <div class="stat-item">
+                        <span class="stat-icon">💪</span>
+                        <div>
+                            <p class="stat-number" id="todayCravings">0</p>
+                            <p class="stat-label">Cravings Logged</p>
                         </div>
-                        <div class="metric">
-                            <span class="metric-icon">🫁</span>
-                            <div class="metric-info">
-                                <p class="metric-label">Lung Capacity</p>
-                                <p class="metric-value">Improving</p>
-                            </div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">✨</span>
+                        <div>
+                            <p class="stat-number" id="todayResisted">0</p>
+                            <p class="stat-label">Resisted</p>
                         </div>
-                        <div class="metric">
-                            <span class="metric-icon">😊</span>
-                            <div class="metric-info">
-                                <p class="metric-label">Mood</p>
-                                <p class="metric-value">Better</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="log-history">
+                <h3>Today's Logs</h3>
+                <div class="log-list" id="todayLogHistory">
+                    <p class="empty-state">No logs today yet</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Weekly -->
+        <div class="tab-content" id="tab-weekly" role="tabpanel">
+            <div class="stats-summary">
+                <h3>This Week's Progress</h3>
+                <div class="weekly-chart">
+                    <p>📊 Chart placeholder - Weekly trends</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content: Monthly -->
+        <div class="tab-content" id="tab-monthly" role="tabpanel">
+            <div class="stats-summary">
+                <h3>Monthly Overview</h3>
+                <div class="progress-stats">
+                    <div class="progress-card">
+                        <h3>Health Improvements</h3>
+                        <div class="health-metrics">
+                            <div class="metric">
+                                <span class="metric-icon">❤️</span>
+                                <div class="metric-info">
+                                    <p class="metric-label">Heart Rate</p>
+                                    <p class="metric-value">Improving</p>
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-icon">🫁</span>
+                                <div class="metric-info">
+                                    <p class="metric-label">Lung Capacity</p>
+                                    <p class="metric-value">Improving</p>
+                                </div>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-icon">😊</span>
+                                <div class="metric-info">
+                                    <p class="metric-label">Mood</p>
+                                    <p class="metric-value">Better</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
+        <!-- Tab Content: All Time -->
+        <div class="tab-content" id="tab-all" role="tabpanel">
+            <div class="progress-stats">
                 <div class="progress-card">
                     <h3>Milestones Achieved</h3>
                     <div class="milestones-list">
@@ -280,25 +407,136 @@
                     </div>
                 </div>
             </div>
-
-            <div class="chart-section">
-                <h2>Craving Trends</h2>
-                <div class="chart-container">
-                    <canvas id="cravingChart"></canvas>
-                    <div class="chart-placeholder">
-                        <p>📊 Your craving trends will appear here</p>
-                        <p class="chart-subtitle">Start logging to see your progress</p>
-                    </div>
-                </div>
-            </div>
-
+            
             <div class="log-history">
-                <h2>Recent Logs</h2>
+                <h2>Complete History</h2>
                 <div class="log-list" id="logHistory">
                     <p class="empty-state">No logs yet. Start by logging your first craving!</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+
+    <!-- 3. ADD COLLAPSIBLE FAQ SECTION (Add as new page or in dashboard) -->
+    <section id="help" class="page">
+        <div class="page-header">
+            <h1>Help & Tips</h1>
+            <p class="tagline">Your recovery toolkit</p>
+        </div>
+
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    What should I do when I have a craving? 
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Use the 5 D's strategy:</strong></p>
+                    <ul>
+                        <li><strong>Delay:</strong> Wait 10 minutes - most cravings pass</li>
+                        <li><strong>Distract:</strong> Do something else to occupy your mind</li>
+                        <li><strong>Deep breathe:</strong> Use our breathing exercise tool</li>
+                        <li><strong>Drink water:</strong> Stay hydrated and occupy your hands</li>
+                        <li><strong>Discuss:</strong> Talk to someone or use CalmBot</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    What are common triggers?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Common triggers include:</p>
+                    <ul>
+                        <li><strong>Stress:</strong> Work pressure, deadlines, conflicts</li>
+                        <li><strong>Social situations:</strong> Being around others who use substances</li>
+                        <li><strong>Emotions:</strong> Sadness, anger, boredom, or even happiness</li>
+                        <li><strong>Habits:</strong> After meals, during breaks, morning routine</li>
+                        <li><strong>Environmental cues:</strong> Certain places or times of day</li>
+                    </ul>
+                    <p>Track your triggers in the craving log to identify patterns.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    What if I relapse?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Remember: A slip is not a failure.</strong></p>
+                    <p>Relapse is often part of the recovery journey. What matters is what you do next:</p>
+                    <ol>
+                        <li>Be kind to yourself - shame doesn't help</li>
+                        <li>Identify what triggered the relapse</li>
+                        <li>Learn from the experience</li>
+                        <li>Recommit to your goals</li>
+                        <li>Reach out for support</li>
+                    </ol>
+                    <p>Your progress isn't erased. Each attempt teaches you something valuable.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    How does the breathing exercise work?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Our breathing exercise uses <strong>box breathing (4-4-4-4)</strong>, a technique used by Navy SEALs and therapists:</p>
+                    <ul>
+                        <li>Breathe in for 4 seconds</li>
+                        <li>Hold for 4 seconds</li>
+                        <li>Breathe out for 4 seconds</li>
+                        <li>Hold for 4 seconds</li>
+                    </ul>
+                    <p>This activates your parasympathetic nervous system, reducing anxiety and cravings.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    Is my data private?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Yes, absolutely.</strong></p>
+                    <p>All your data is stored locally on your device using browser localStorage. Nothing is sent to any server. Your information never leaves your device.</p>
+                    <p>You can export or delete your data at any time from Settings.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h2>Quick Coping Strategies</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <span class="tip-icon">🚶</span>
+                    <h3>Take a Walk</h3>
+                    <p>Even 5 minutes of movement can reduce cravings significantly.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">💧</span>
+                    <h3>Drink Water</h3>
+                    <p>Hydration helps flush out toxins and occupies your hands and mouth.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">📞</span>
+                    <h3>Call Someone</h3>
+                    <p>Talking to a friend or using CalmBot provides immediate support.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">🎵</span>
+                    <h3>Listen to Music</h3>
+                    <p>Music can shift your mood and distract from cravings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
         <!-- CalmBot Page -->
         <section id="calmbot" class="page">
@@ -514,11 +752,172 @@
         </div>
     </div>
 
+    <div class="modal" id="onboardingModal">
+    <div class="modal-content">
+        <div class="onboarding-header">
+            <h2>Welcome to ReKindle! 🔥</h2>
+            <p>Let's personalize your recovery journey</p>
+        </div>
+        <form id="onboardingForm" class="modal-form">
+            <div class="form-group">
+                <label for="onboardingName">What's your name?</label>
+                <input type="text" id="onboardingName" required placeholder="Enter your name" aria-required="true">
+            </div>
+            
+            <div class="form-group">
+                <label>What would you like to work on?</label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="goal" value="smoking" id="goalSmoking">
+                    <span>🚭 Quit Smoking/Vaping</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="goal" value="drinking" id="goalDrinking">
+                    <span>🍃 Reduce/Quit Drinking</span>
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label for="motivationReason">What's your main motivation?</label>
+                <textarea id="motivationReason" rows="2" placeholder="E.g., Health, family, saving money..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="startDate">When did you start your journey?</label>
+                <input type="date" id="startDate" required aria-required="true">
+            </div>
+            
+            <button type="submit" class="submit-btn">Start My Journey 🚀</button>
+        </form>
+    </div>
+</div>
+
+    <section id="help" class="page">
+        <div class="page-header">
+            <h1>Help & Tips</h1>
+            <p class="tagline">Your recovery toolkit</p>
+        </div>
+
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    What should I do when I have a craving? 
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Use the 5 D's strategy:</strong></p>
+                    <ul>
+                        <li><strong>Delay:</strong> Wait 10 minutes - most cravings pass</li>
+                        <li><strong>Distract:</strong> Do something else to occupy your mind</li>
+                        <li><strong>Deep breathe:</strong> Use our breathing exercise tool</li>
+                        <li><strong>Drink water:</strong> Stay hydrated and occupy your hands</li>
+                        <li><strong>Discuss:</strong> Talk to someone or use CalmBot</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    What are common triggers?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Common triggers include:</p>
+                    <ul>
+                        <li><strong>Stress:</strong> Work pressure, deadlines, conflicts</li>
+                        <li><strong>Social situations:</strong> Being around others who use substances</li>
+                        <li><strong>Emotions:</strong> Sadness, anger, boredom, or even happiness</li>
+                        <li><strong>Habits:</strong> After meals, during breaks, morning routine</li>
+                        <li><strong>Environmental cues:</strong> Certain places or times of day</li>
+                    </ul>
+                    <p>Track your triggers in the craving log to identify patterns.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    What if I relapse?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Remember: A slip is not a failure.</strong></p>
+                    <p>Relapse is often part of the recovery journey. What matters is what you do next:</p>
+                    <ol>
+                        <li>Be kind to yourself - shame doesn't help</li>
+                        <li>Identify what triggered the relapse</li>
+                        <li>Learn from the experience</li>
+                        <li>Recommit to your goals</li>
+                        <li>Reach out for support</li>
+                    </ol>
+                    <p>Your progress isn't erased. Each attempt teaches you something valuable.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    How does the breathing exercise work?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Our breathing exercise uses <strong>box breathing (4-4-4-4)</strong>, a technique used by Navy SEALs and therapists:</p>
+                    <ul>
+                        <li>Breathe in for 4 seconds</li>
+                        <li>Hold for 4 seconds</li>
+                        <li>Breathe out for 4 seconds</li>
+                        <li>Hold for 4 seconds</li>
+                    </ul>
+                    <p>This activates your parasympathetic nervous system, reducing anxiety and cravings.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    Is my data private?
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Yes, absolutely.</strong></p>
+                    <p>All your data is stored locally on your device using browser localStorage. Nothing is sent to any server. Your information never leaves your device.</p>
+                    <p>You can export or delete your data at any time from Settings.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h2>Quick Coping Strategies</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <span class="tip-icon">🚶</span>
+                    <h3>Take a Walk</h3>
+                    <p>Even 5 minutes of movement can reduce cravings significantly.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">💧</span>
+                    <h3>Drink Water</h3>
+                    <p>Hydration helps flush out toxins and occupies your hands and mouth.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">📞</span>
+                    <h3>Call Someone</h3>
+                    <p>Talking to a friend or using CalmBot provides immediate support.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">🎵</span>
+                    <h3>Listen to Music</h3>
+                    <p>Music can shift your mood and distract from cravings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script src="js/data.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/craving-log.js"></script>
     <script src="js/breathing.js"></script>
     <script src="js/calmbot.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/mock-data.js"></script>
+    <script src="enchancements.js"></script>
 </body>
 </html>
