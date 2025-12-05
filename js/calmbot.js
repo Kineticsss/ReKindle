@@ -1,5 +1,61 @@
 const CalmBot = {
-    responses: {
+    getResponses() {
+    if (!window.Translations) {
+        return this.fallbackResponses;
+    }
+    
+    const t = (key) => window.Translations.t(key);
+    
+    return {
+        struggling: [
+            t('calmbot_struggling_1'),
+            t('calmbot_struggling_2'),
+            t('calmbot_struggling_3'),
+            t('calmbot_struggling_4')
+        ],
+        good: [
+            t('calmbot_good_1'),
+            t('calmbot_good_2'),
+            t('calmbot_good_3'),
+            t('calmbot_good_4')
+        ],
+        tips: [
+            t('calmbot_tips_1'),
+            t('calmbot_tips_2'),
+            t('calmbot_tips_3'),
+            t('calmbot_tips_4')
+        ],
+        motivation: [
+            t('calmbot_motivation_1'),
+            t('calmbot_motivation_2'),
+            t('calmbot_motivation_3'),
+            t('calmbot_motivation_4'),
+            t('calmbot_motivation_5')
+        ],
+        default: [
+            t('calmbot_default_1'),
+            t('calmbot_default_2'),
+            t('calmbot_default_3'),
+            t('calmbot_default_4')
+        ],
+        gratitude: [
+            t('calmbot_gratitude_1'),
+            t('calmbot_gratitude_2'),
+            t('calmbot_gratitude_3')
+        ],
+        relapse: [
+            t('calmbot_relapse_1'),
+            t('calmbot_relapse_2'),
+            t('calmbot_relapse_3')
+        ],
+        emergency: [
+            t('calmbot_emergency_1'),
+            t('calmbot_emergency_2'),
+            t('calmbot_emergency_3')
+        ]
+    };
+},
+    fallbackResponses: {
         struggling: [
             "I hear you. Cravings can be really tough. Remember, they're temporary - they usually pass in 5-10 minutes. What usually helps you get through them?",
             "It's okay to struggle. Every moment you're fighting is a moment you're getting stronger. Have you tried the breathing exercise? It might help calm your mind.",
@@ -113,12 +169,15 @@ const CalmBot = {
     },
 
     handleQuickResponse(type) {
+        const t = window.Translations ? window.Translations.t.bind(window.Translations) : (key) => key;
+    
         const messages = {
-            struggling: "I'm struggling with cravings right now.",
-            good: "I'm doing well today!",
-            tips: "Can you give me some coping tips?",
-            motivation: "I need some motivation."
+            struggling: t('struggling_cravings'),
+            good: t('doing_well'),
+            tips: t('need_tips'),
+            motivation: t('need_motivation')
         };
+
 
         const userMessage = messages[type];
         this.addMessage(userMessage, false);
@@ -184,47 +243,76 @@ const CalmBot = {
 
     generateResponse(message) {
         const lowerMessage = message.toLowerCase();
+        const responses = this.getResponses();
 
         if (this.containsKeywords(lowerMessage, this.keywords.emergency)) {
-            return this.getRandomResponse(this.responses.emergency);
+            return this.getRandomResponse(responses.emergency);
         }
 
         if (this.containsKeywords(lowerMessage, this.keywords.relapse)) {
-            return this.getRandomResponse(this.responses.relapse);
+            return this.getRandomResponse(responses.relapse);
         }
 
         if (this.containsKeywords(lowerMessage, this.keywords.gratitude)) {
-            return this.getRandomResponse(this.responses.gratitude);
+            return this.getRandomResponse(responses.gratitude);
         }
 
         if (this.containsKeywords(lowerMessage, this.keywords.struggling)) {
-            return this.getRandomResponse(this.responses.struggling);
+            return this.getRandomResponse(responses.struggling);
         }
 
         if (this.containsKeywords(lowerMessage, this.keywords.tips)) {
-            return this.getRandomResponse(this.responses.tips);
+            return this.getRandomResponse(responses.tips);
         }
 
         if (this.containsKeywords(lowerMessage, this.keywords.motivation)) {
-            return this.getRandomResponse(this.responses.motivation);
+            return this.getRandomResponse(responses.motivation);
         }
 
         if (this.containsKeywords(lowerMessage, this.keywords.good)) {
-            return this.getRandomResponse(this.responses.good);
+            return this.getRandomResponse(responses.good);
         }
 
         if (lowerMessage.includes('progress') || lowerMessage.includes('stats') || lowerMessage.includes('streak')) {
             return this.generateStatsResponse();
         }
 
-        return this.getRandomResponse(this.responses.default);
+        return this.getRandomResponse(responses.default);
     },
 
     getResponseByType(type) {
+        const responses = this.getResponses();
         if (this.responses[type]) {
-            return this.getRandomResponse(this.responses[type]);
+            return this.getRandomResponse(responses[type]);
         }
-        return this.getRandomResponse(this.responses.default);
+        return this.getRandomResponse(responses.default);
+    },
+
+    generateStatsResponse() {
+    const stats = AppData.stats;
+    const t = window.Translations ? window.Translations.t.bind(window.Translations) : (key) => key;
+    
+    let response = t('calmbot_stats_intro') + "\n\n";
+
+    if (stats.smokingStreak > 0) {
+        response += t('calmbot_stats_smoking').replace('{{days}}', stats.smokingStreak);
+    }
+
+    if (stats.drinkingStreak > 0) {
+        response += t('calmbot_stats_drinking').replace('{{days}}', stats.drinkingStreak);
+    }
+
+    if (stats.cravingsResisted > 0) {
+        response += "\n\n" + t('calmbot_stats_resisted').replace('{{count}}', stats.cravingsResisted);
+    }
+
+    if (stats.moneySaved > 0) {
+        response += "\n\n" + t('calmbot_stats_money').replace('{{amount}}', stats.moneySaved);
+    }
+
+    response += "\n\n" + t('calmbot_stats_outro');
+
+    return response;
     },
 
     containsKeywords(message, keywords) {
