@@ -1,17 +1,24 @@
-// ===================================
-// MOCK DATA FOR VIDEO PRESENTATION
-// ===================================
-// Run this in the browser console OR add it as a script tag before app.js
-// This will populate the app with realistic demo data
+const DEMO_MODE = {
+    enabled: false,
+    autoLoad: true,
+    showConsoleInfo: true
+};
 
 function loadMockData() {
-    console.log('Loading mock data for presentation...');
+    console.log('🎬 Loading demo data for presentation...');
     
-    // Set user information
+    const hasRealData = AppData.cravingLogs.length > 0 ||
+                        AppData.stats.smokingStreak > 0 ||
+                        AppData.stats.drinkingStreak > 0;
+    
+    if (hasRealData && !confirm('You have existing data. Replace with demo data?')) {
+        console.log('❌ Demo data loading cancelled');
+        return;
+    }
+    
     AppData.user.name = 'Alex';
     AppData.user.language = 'en';
     
-    // Set journey start dates (14 days ago for smoking, 10 days ago for drinking)
     const now = new Date();
     const smokingStart = new Date(now);
     smokingStart.setDate(smokingStart.getDate() - 14);
@@ -20,11 +27,10 @@ function loadMockData() {
     const drinkingStart = new Date(now);
     drinkingStart.setDate(drinkingStart.getDate() - 10);
     AppData.user.drinkingStartDate = drinkingStart.toISOString();
-    
-    // Add mock craving logs
+
     const mockLogs = [
         {
-            timestamp: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+            timestamp: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(),
             type: 'smoking',
             intensity: 7,
             trigger: 'stress',
@@ -32,7 +38,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
+            timestamp: new Date(now.getTime() - 5 * 60 * 60 * 1000).toISOString(),
             type: 'drinking',
             intensity: 5,
             trigger: 'social',
@@ -40,7 +46,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString(), // Yesterday
+            timestamp: new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString(),
             type: 'smoking',
             intensity: 8,
             trigger: 'habit',
@@ -48,7 +54,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 24 * 60 * 60 * 1000 - 6 * 60 * 60 * 1000).toISOString(), // Yesterday evening
+            timestamp: new Date(now.getTime() - 24 * 60 * 60 * 1000 - 6 * 60 * 60 * 1000).toISOString(),
             type: 'both',
             intensity: 6,
             trigger: 'boredom',
@@ -56,7 +62,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+            timestamp: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'drinking',
             intensity: 9,
             trigger: 'emotion',
@@ -64,7 +70,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
+            timestamp: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'smoking',
             intensity: 4,
             trigger: 'stress',
@@ -72,7 +78,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000).toISOString(), // 4 days ago
+            timestamp: new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'smoking',
             intensity: 7,
             trigger: 'social',
@@ -80,7 +86,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
+            timestamp: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'drinking',
             intensity: 8,
             trigger: 'social',
@@ -88,7 +94,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000).toISOString(), // 6 days ago
+            timestamp: new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'both',
             intensity: 6,
             trigger: 'habit',
@@ -96,7 +102,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 1 week ago
+            timestamp: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'smoking',
             intensity: 5,
             trigger: 'boredom',
@@ -104,7 +110,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 8 * 24 * 60 * 60 * 1000).toISOString(), // 8 days ago
+            timestamp: new Date(now.getTime() - 8 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'drinking',
             intensity: 7,
             trigger: 'stress',
@@ -112,7 +118,7 @@ function loadMockData() {
             resisted: false
         },
         {
-            timestamp: new Date(now.getTime() - 9 * 24 * 60 * 60 * 1000).toISOString(), // 9 days ago
+            timestamp: new Date(now.getTime() - 9 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'smoking',
             intensity: 9,
             trigger: 'emotion',
@@ -120,7 +126,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 10 * 24 * 60 * 60 * 1000).toISOString(), // 10 days ago
+            timestamp: new Date(now.getTime() - 10 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'smoking',
             intensity: 6,
             trigger: 'habit',
@@ -128,7 +134,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 11 * 24 * 60 * 60 * 1000).toISOString(), // 11 days ago
+            timestamp: new Date(now.getTime() - 11 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'both',
             intensity: 8,
             trigger: 'social',
@@ -136,7 +142,7 @@ function loadMockData() {
             resisted: true
         },
         {
-            timestamp: new Date(now.getTime() - 12 * 24 * 60 * 60 * 1000).toISOString(), // 12 days ago
+            timestamp: new Date(now.getTime() - 12 * 24 * 60 * 60 * 1000).toISOString(),
             type: 'smoking',
             intensity: 5,
             trigger: 'boredom',
@@ -144,8 +150,7 @@ function loadMockData() {
             resisted: true
         }
     ];
-    
-    // Clear existing logs and add mock logs
+
     AppData.cravingLogs = [];
     mockLogs.forEach(log => {
         AppData.cravingLogs.push({
@@ -153,8 +158,7 @@ function loadMockData() {
             ...log
         });
     });
-    
-    // Add chat history with CalmBot
+
     AppData.chatHistory = [
         { message: "Hi there! I'm CalmBot, your supportive companion. How are you feeling today?", isBot: true },
         { message: "I'm feeling good today! 2 weeks smoke-free!", isBot: false },
@@ -162,13 +166,11 @@ function loadMockData() {
         { message: "The breathing exercises really help when I get cravings", isBot: false },
         { message: "That's fantastic! You've found what works for you. Keep it up! 💪", isBot: true }
     ];
-    
-    // Unlock some achievements
-    AppData.achievements[0].unlocked = true; // First Day
-    AppData.achievements[1].unlocked = true; // Week Warrior
-    AppData.achievements[3].unlocked = true; // Resist 10
-    
-    // Add trusted contacts
+
+    AppData.achievements[0].unlocked = true;
+    AppData.achievements[1].unlocked = true;
+    AppData.achievements[3].unlocked = true;
+
     AppData.trustedContacts = [
         {
             id: 1,
@@ -183,40 +185,79 @@ function loadMockData() {
             relationship: 'Friend'
         }
     ];
-    
-    // Update stats
+
+    localStorage.setItem('rekindle_onboarded', 'true');
+    localStorage.setItem('rekindle_welcomed', 'true');
+
     AppData.updateStreaks();
-    
-    // Save everything
+
     AppData.save();
-    
-    // Refresh the display
+
     if (window.App) {
         App.updateDashboard();
         App.updateProgressPage();
         App.updateEmergencyPage();
     }
     
-    console.log('✅ Mock data loaded successfully!');
+    console.log('✅ Demo data loaded successfully!');
     console.log('📊 Stats:', AppData.stats);
     console.log('📝 Logs:', AppData.cravingLogs.length, 'entries');
     console.log('🏆 Achievements unlocked:', AppData.achievements.filter(a => a.unlocked).length);
-    
-    // Show success notification
+
     if (window.Navigation) {
-        Navigation.showNotification('Demo data loaded! Ready for presentation 🎬', 'success', 4000);
+        Navigation.showNotification('🎬 Demo data loaded! Ready for presentation', 'success', 4000);
     }
 }
 
-// Auto-load on page load (comment out after presentation)
+function clearDemoData() {
+    if (confirm('Clear all demo data and start fresh?')) {
+        if (typeof AppData !== 'undefined' && AppData.resetAllData) {
+            AppData.resetAllData();
+        } else {
+            localStorage.clear();
+            location.reload();
+        }
+    }
+}
+
+function toggleDemoMode(enable) {
+    DEMO_MODE.enabled = enable;
+    console.log(`🎬 Demo mode ${enable ? 'ENABLED' : 'DISABLED'}`);
+    
+    if (enable) {
+        loadMockData();
+    } else {
+        console.log('💡 Refresh page to start with clean data');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
-        // Uncomment the line below to auto-load mock data
-        loadMockData();
+        if (DEMO_MODE.enabled && DEMO_MODE.autoLoad) {
+            const hasData = localStorage.getItem('rekindle_data');
+            const isOnboarded = localStorage.getItem('rekindle_onboarded');
+
+            if (!hasData || !isOnboarded) {
+                console.log('🎬 Auto-loading demo data...');
+                loadMockData();
+            } else if (DEMO_MODE.showConsoleInfo) {
+                console.log('ℹ️ Demo mode enabled but data exists. Use loadMockData() to replace.');
+            }
+        }
+
+        if (DEMO_MODE.showConsoleInfo) {
+            console.log('%c🔥 ReKindle Demo Controls 🔥', 'color: #8B5CF6; font-size: 16px; font-weight: bold;');
+            console.log('%cAvailable Commands:', 'color: #A78BFA; font-size: 14px; font-weight: bold;');
+            console.log('  loadMockData()      - Load demo data for presentation');
+            console.log('  clearDemoData()     - Clear all data and start fresh');
+            console.log('  toggleDemoMode(true/false) - Enable/disable demo mode');
+            console.log('%cDemo Mode Status:', 'color: #A78BFA; font-size: 14px; font-weight: bold;');
+            console.log('  ' + (DEMO_MODE.enabled ? '✅ ENABLED' : '❌ DISABLED'));
+        }
     }, 500);
 });
 
-// Make function available in console
 window.loadMockData = loadMockData;
-
-console.log('💡 To load demo data, run: loadMockData()');
+window.clearDemoData = clearDemoData;
+window.toggleDemoMode = toggleDemoMode;
+window.DEMO_MODE = DEMO_MODE;

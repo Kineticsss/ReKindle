@@ -240,41 +240,69 @@ const AppData = {
     },
 
     // Reset all data
-    resetAllData() {
-        if (confirm('Are you sure you want to reset all your data? This cannot be undone.')) {
-            localStorage.removeItem('rekindle_data');
-            
-            // Reset to defaults
-            this.user = {
-                name: 'Friend',
-                language: 'en',
-                smokingStartDate: null,
-                drinkingStartDate: null,
-                settings: {
-                    notifications: true,
-                    sound: true
-                }
-            };
-            
-            this.stats = {
-                smokingStreak: 0,
-                drinkingStreak: 0,
-                moneySaved: 0,
-                cravingsResisted: 0,
-                totalLogs: 0
-            };
-            
-            this.cravingLogs = [];
-            this.chatHistory = [];
-            this.trustedContacts = [];
-            
-            this.achievements.forEach(achievement => {
-                achievement.unlocked = false;
-            });
-            
-            // Reload page
-            location.reload();
+resetAllData() {
+    if (confirm('⚠️ Are you sure you want to reset ALL your data?\n\nThis will:\n• Delete all craving logs\n• Reset all stats and streaks\n• Remove all achievements\n• Clear chat history\n• Delete trusted contacts\n\nThis CANNOT be undone!')) {
+        // Show loading
+        if (typeof Navigation !== 'undefined') {
+            Navigation.showNotification('Resetting all data...', 'success', 2000);
         }
+        
+        // Clear ALL localStorage keys related to ReKindle
+        const keysToRemove = [
+            'rekindle_data',
+            'rekindle_welcomed',
+            'rekindle_onboarded',
+            'rekindle_display_settings',
+            'rekindle_textsize',
+            'rekindle_highcontrast'
+        ];
+        
+        keysToRemove.forEach(key => {
+            localStorage.removeItem(key);
+        });
+        
+        // Reset to factory defaults
+        this.user = {
+            name: 'Friend',
+            language: 'en',
+            smokingStartDate: null,
+            drinkingStartDate: null,
+            settings: {
+                notifications: true,
+                sound: true
+            }
+        };
+        
+        this.stats = {
+            smokingStreak: 0,
+            drinkingStreak: 0,
+            moneySaved: 0,
+            cravingsResisted: 0,
+            totalLogs: 0
+        };
+        
+        this.cravingLogs = [];
+        this.chatHistory = [];
+        this.trustedContacts = [];
+        
+        this.achievements.forEach(achievement => {
+            achievement.unlocked = false;
+        });
+        
+        // Show success message
+        if (typeof Navigation !== 'undefined') {
+            Navigation.showNotification('✅ All data has been reset!', 'success', 2000);
+        }
+        
+        // Reload page after a delay
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+        
+        return true;
+    }
+    
+        return false;
     },
 
     // Get recent logs

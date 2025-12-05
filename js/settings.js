@@ -404,10 +404,143 @@ function openSettingsModal() {
     }
 }
 
-// Update settings button click handler in DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-    const settingsBtn = document.getElementById('settingsBtn');
-    if (settingsBtn) {
-        settingsBtn.addEventListener('click', openSettingsModal);
+const DemoModeIndicator = {
+    init() {
+        // Add demo mode section to settings if demo is enabled
+        if (window.DEMO_MODE && window.DEMO_MODE.enabled) {
+            this.addDemoModeSection();
+            this.addDemoModeIndicator();
+        }
+    },
+
+    addDemoModeSection() {
+        // Find the app info section (last section)
+        const settingsContent = document.querySelector('.settings-content');
+        if (!settingsContent) return;
+
+        // Create demo mode section
+        const demoSection = document.createElement('div');
+        demoSection.className = 'settings-section';
+        demoSection.innerHTML = `
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h3>Demo Mode</h3>
+            </div>
+            
+            <div class="setting-row" style="background: rgba(192, 132, 252, 0.1); border-color: rgba(192, 132, 252, 0.3);">
+                <div class="setting-header">
+                    <div class="setting-label">
+                        <label>Demo Mode Active</label>
+                        <p class="setting-hint">Mock data is loaded for presentation purposes</p>
+                    </div>
+                    <button class="action-button secondary-action" id="reloadDemoBtn" style="min-width: 160px;">
+                        <span>🔄</span> Reload Demo
+                    </button>
+                </div>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-header">
+                    <div class="setting-label">
+                        <label>Clear Demo Data</label>
+                        <p class="setting-hint">Remove all demo data and start fresh</p>
+                    </div>
+                    <button class="action-button danger-action" id="clearDemoBtn" style="min-width: 160px;">
+                        <span>🗑️</span> Clear Demo
+                    </button>
+                </div>
+            </div>
+
+            <div style="padding: 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 0.5rem; border: 1px solid rgba(139, 92, 246, 0.2);">
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0; line-height: 1.6;">
+                    <strong style="color: var(--primary-light);">💡 Note:</strong> 
+                    Demo data automatically reloads on page refresh. 
+                    To disable, set <code style="background: var(--bg-input); padding: 0.125rem 0.375rem; border-radius: 0.25rem;">DEMO_MODE.enabled = false</code> in mock-data.js
+                </p>
+            </div>
+        `;
+
+        // Insert before the About section
+        const aboutSection = Array.from(settingsContent.children)
+            .find(section => section.querySelector('h3')?.textContent === 'About');
+        
+        if (aboutSection) {
+            settingsContent.insertBefore(demoSection, aboutSection);
+        } else {
+            settingsContent.appendChild(demoSection);
+        }
+
+        // Add event listeners
+        const reloadDemoBtn = document.getElementById('reloadDemoBtn');
+        const clearDemoBtn = document.getElementById('clearDemoBtn');
+
+        if (reloadDemoBtn) {
+            reloadDemoBtn.addEventListener('click', () => {
+                if (window.loadMockData) {
+                    Navigation.closeModal('settingsModal');
+                    window.loadMockData();
+                }
+            });
+        }
+
+        if (clearDemoBtn) {
+            clearDemoBtn.addEventListener('click', () => {
+                Navigation.closeModal('settingsModal');
+                if (window.clearDemoData) {
+                    window.clearDemoData();
+                }
+            });
+        }
+    },
+
+    addDemoModeIndicator() {
+        // Add a small indicator badge to the settings button
+        const settingsBtn = document.getElementById('settingsBtn');
+        if (!settingsBtn) return;
+
+        // Create demo indicator
+        const indicator = document.createElement('span');
+        indicator.className = 'demo-indicator';
+        indicator.innerHTML = '🎬';
+        indicator.title = 'Demo Mode Active';
+        indicator.style.cssText = `
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            font-size: 0.8rem;
+            background: linear-gradient(135deg, #8B5CF6, #C084FC);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #1A1A2E;
+            animation: demoPulse 2s ease infinite;
+        `;
+
+        // Add pulsing animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes demoPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Make settings button position relative
+        settingsBtn.style.position = 'relative';
+        settingsBtn.appendChild(indicator);
     }
+};
+
+// Initialize demo mode UI when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        DemoModeIndicator.init();
+    }, 1000);
 });
+
+// Make available globally
+window.DemoModeIndicator = DemoModeIndicator;

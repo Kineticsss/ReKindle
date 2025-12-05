@@ -748,116 +748,197 @@
 
     <!-- Settings Modal -->
 <div class="modal" id="settingsModal" role="dialog" aria-labelledby="settings-title" aria-modal="true">
-    <div class="modal-content">
+    <div class="modal-content settings-modal-content">
         <div class="modal-header">
-            <h2 id="settings-title">Settings</h2>
+            <h2 id="settings-title">⚙️ Settings</h2>
             <button class="close-modal" data-modal="settingsModal" aria-label="Close settings">&times;</button>
         </div>
+        
         <div class="settings-content">
             <!-- Personal Settings -->
             <div class="settings-section">
-                <h3 class="settings-section-title">Personal</h3>
+                <div class="section-header">
+                    <span class="section-icon">👤</span>
+                    <h3>Personal</h3>
+                </div>
                 
-                <div class="setting-group">
-                    <label for="userNameInput">Your Name</label>
-                    <input type="text" id="userNameInput" placeholder="Enter your name">
+                <div class="setting-row">
+                    <div class="setting-header">
+                        <div class="setting-label">
+                            <label for="userNameInput">Display Name</label>
+                            <p class="setting-hint">How you'd like to be addressed in the app</p>
+                        </div>
+                        <div class="setting-control">
+                            <input type="text" id="userNameInput" placeholder="Enter your name">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="setting-group">
-                    <label for="languageSelect">Language</label>
-                    <select id="languageSelect">
-                        <option value="en">English</option>
-                        <option value="fil">Filipino</option>
-                    </select>
+                <div class="setting-row">
+                    <div class="setting-header">
+                        <div class="setting-label">
+                            <label for="languageSelect">Language</label>
+                            <p class="setting-hint">Choose your preferred language</p>
+                        </div>
+                        <div class="setting-control">
+                            <select id="languageSelect">
+                                <option value="en">English</option>
+                                <option value="fil">Filipino</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Display Settings -->
             <div class="settings-section">
-                <h3 class="settings-section-title">Display</h3>
+                <div class="section-header">
+                    <span class="section-icon">🎨</span>
+                    <h3>Display</h3>
+                </div>
                 
-                <div class="setting-group">
-                    <label for="themeSelect">Theme</label>
-                    <select id="themeSelect">
-                        <option value="dark">Dark Mode (Default)</option>
-                        <option value="light">Light Mode</option>
-                        <option value="auto">Auto (System)</option>
-                    </select>
-                    <p class="setting-description">Choose your preferred color theme</p>
+                <div class="setting-row">
+                    <div class="setting-header">
+                        <div class="setting-label">
+                            <label for="themeSelect">Theme</label>
+                            <p class="setting-hint">Choose your color scheme</p>
+                        </div>
+                        <div class="setting-control">
+                            <select id="themeSelect">
+                                <option value="dark">Dark Mode (Default)</option>
+                                <option value="light">Light Mode</option>
+                                <option value="auto">Auto (System)</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="setting-group">
-                    <label for="textSizeSelect">Text Size</label>
-                    <select id="textSizeSelect">
-                        <option value="small">Small</option>
-                        <option value="normal">Normal (Default)</option>
-                        <option value="large">Large</option>
-                        <option value="xlarge">Extra Large</option>
-                    </select>
-                    <p class="setting-description">Adjust text size for better readability</p>
+                <div class="setting-row">
+                    <div class="setting-header">
+                        <div class="setting-label">
+                            <label for="textSizeSelect">Text Size</label>
+                            <p class="setting-hint">Adjust text size for better readability</p>
+                        </div>
+                        <div class="setting-control">
+                            <select id="textSizeSelect">
+                                <option value="small">Small</option>
+                                <option value="normal">Normal (Default)</option>
+                                <option value="large">Large</option>
+                                <option value="xlarge">Extra Large</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="setting-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="highContrastToggle">
-                        <span>High Contrast Mode</span>
-                    </label>
-                    <p class="setting-description">Increase contrast for better visibility</p>
+                <div class="setting-row">
+                    <div class="setting-header">
+                        <div class="setting-label">
+                            <label for="highContrastToggle">High Contrast Mode</label>
+                            <p class="setting-hint">Increase contrast for better visibility</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="highContrastToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="setting-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="reducedMotionToggle">
-                        <span>Reduce Animations</span>
-                    </label>
-                    <p class="setting-description">Minimize movement for sensitive users</p>
+                <div class="setting-row">
+                    <div class="setting-header">
+                        <div class="setting-label">
+                            <label for="reducedMotionToggle">Reduce Animations</label>
+                            <p class="setting-hint">Minimize movement for sensitive users</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="reducedMotionToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
             <!-- Notification Settings -->
             <div class="settings-section">
-                <h3 class="settings-section-title">Notifications</h3>
+                <div class="section-header">
+                    <span class="section-icon">🔔</span>
+                    <h3>Notifications</h3>
+                </div>
                 
-                <div class="setting-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="notificationsToggle" checked>
-                        <span>Enable Notifications</span>
-                    </label>
-                    <p class="setting-description">Show achievement and reminder notifications</p>
+                <div class="setting-row">
+                    <div class="setting-header">
+                        <div class="setting-label">
+                            <label for="notificationsToggle">Enable Notifications</label>
+                            <p class="setting-hint">Show achievement and reminder notifications</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notificationsToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="setting-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="soundToggle" checked>
-                        <span>Sound Effects</span>
-                    </label>
-                    <p class="setting-description">Play sounds for interactions and achievements</p>
+                <div class="setting-row">
+                    <div class="setting-header">
+                        <div class="setting-label">
+                            <label for="soundToggle">Sound Effects</label>
+                            <p class="setting-hint">Play sounds for interactions and achievements</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="soundToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
             <!-- Data Management -->
             <div class="settings-section">
-                <h3 class="settings-section-title">Data Management</h3>
+                <div class="section-header">
+                    <span class="section-icon">💾</span>
+                    <h3>Data Management</h3>
+                </div>
                 
-                <button class="secondary-btn" id="exportDataBtn">
-                    <span>📥</span> Export Data
-                </button>
-                <p class="setting-description">Download your data as JSON backup</p>
+                <div class="setting-row">
+                    <div class="setting-header">
+                        <div class="setting-label">
+                            <label>Export Your Data</label>
+                            <p class="setting-hint">Download your data as JSON backup</p>
+                        </div>
+                        <button class="action-button secondary-action" id="exportDataBtn">
+                            <span>📥</span> Export
+                        </button>
+                    </div>
+                </div>
 
-                <button class="danger-btn" id="resetDataBtn">
-                    <span>⚠️</span> Reset All Data
-                </button>
-                <p class="setting-description">This will delete all your progress permanently</p>
+                <div class="setting-row danger-row">
+                    <div class="setting-header">
+                        <div class="setting-label">
+                            <label>Reset All Data</label>
+                            <p class="setting-hint">This will delete all your progress permanently</p>
+                        </div>
+                        <button class="action-button danger-action" id="resetDataBtn">
+                            <span>⚠️</span> Reset
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- App Info -->
             <div class="settings-section">
-                <h3 class="settings-section-title">About</h3>
-                <p class="app-info">
-                    <strong>ReKindle</strong> v1.0<br>
-                    HCI Final Project<br>
-                    Built with ❤️ for recovery support
-                </p>
+                <div class="section-header">
+                    <span class="section-icon">ℹ️</span>
+                    <h3>About</h3>
+                </div>
+                
+                <div class="app-info-box">
+                    <div class="app-logo">🔥</div>
+                    <div class="app-details">
+                        <h4>ReKindle</h4>
+                        <p class="version">Version 1.0</p>
+                        <p class="description">Your companion for recovery and transformation</p>
+                        <p class="credits">HCI Final Project • Built with ❤️</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1032,6 +1113,6 @@
     <script src="js/enhanced-features.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/interaction.js"></script>
-    <script scr="js/charts.js"></script>
+    <script src="js/charts.js"></script>
 </body>
 </html>

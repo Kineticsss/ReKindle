@@ -301,6 +301,133 @@ const App = {
         reader.readAsText(file);
     },
 
+    clearAllDisplayedData() {
+    // Clear dashboard stats
+    const smokingStreakEl = document.getElementById('smokingStreak');
+    const drinkingStreakEl = document.getElementById('drinkingStreak');
+    const moneySavedEl = document.getElementById('moneySaved');
+    const cravingsResistedEl = document.getElementById('cravingsResisted');
+
+    if (smokingStreakEl) smokingStreakEl.textContent = '0';
+    if (drinkingStreakEl) drinkingStreakEl.textContent = '0';
+    if (moneySavedEl) moneySavedEl.textContent = '₱0';
+    if (cravingsResistedEl) cravingsResistedEl.textContent = '0';
+
+    // Clear journey progress
+    const smokingProgress = document.getElementById('smokingProgress');
+    const drinkingProgress = document.getElementById('drinkingProgress');
+    const smokingStatus = document.getElementById('smokingStatus');
+    const drinkingStatus = document.getElementById('drinkingStatus');
+
+    if (smokingProgress) smokingProgress.style.width = '0%';
+    if (drinkingProgress) drinkingProgress.style.width = '0%';
+    if (smokingStatus) smokingStatus.textContent = 'Just starting your journey';
+    if (drinkingStatus) drinkingStatus.textContent = 'Just starting your journey';
+
+    // Clear log history
+    const logHistory = document.getElementById('logHistory');
+    if (logHistory) {
+        logHistory.innerHTML = '<p class="empty-state">No logs yet. Start by logging your first craving!</p>';
+    }
+
+    // Clear today's logs
+    const todayLogHistory = document.getElementById('todayLogHistory');
+    if (todayLogHistory) {
+        todayLogHistory.innerHTML = '<p class="empty-state">No logs today yet</p>';
+    }
+
+    // Clear daily stats
+    const todayCravings = document.getElementById('todayCravings');
+    const todayResisted = document.getElementById('todayResisted');
+    if (todayCravings) todayCravings.textContent = '0';
+    if (todayResisted) todayResisted.textContent = '0';
+
+    // Clear weekly stats
+    const weeklyTotal = document.getElementById('weeklyTotal');
+    const weeklyResisted = document.getElementById('weeklyResisted');
+    const weeklyRate = document.getElementById('weeklyRate');
+    if (weeklyTotal) weeklyTotal.textContent = '0';
+    if (weeklyResisted) weeklyResisted.textContent = '0';
+    if (weeklyRate) weeklyRate.textContent = '0%';
+
+    // Clear weekly insights
+    const weeklyInsights = document.getElementById('weeklyInsights');
+    if (weeklyInsights) {
+        weeklyInsights.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: var(--space-md);">No data yet. Start logging to see insights!</p>';
+    }
+
+    // Clear chart
+    const canvas = document.getElementById('weeklyChart');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Redraw empty chart
+        if (window.Charts && window.Charts.renderWeeklyChart) {
+            window.Charts.renderWeeklyChart();
+        }
+    }
+
+    // Lock all achievements
+    const achievementItems = document.querySelectorAll('.achievement-item');
+    achievementItems.forEach(item => {
+        item.classList.remove('unlocked');
+        item.classList.add('locked');
+    });
+
+    // Lock all milestones
+    const milestones = document.querySelectorAll('.milestone');
+    milestones.forEach(milestone => {
+        milestone.classList.remove('completed');
+        milestone.classList.add('locked');
+    });
+
+    // Clear chat messages (keep only the initial bot message)
+    const chatMessages = document.getElementById('chatMessages');
+    if (chatMessages) {
+        chatMessages.innerHTML = `
+            <div class="chat-message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-bubble">
+                    <p>Hi there! I'm CalmBot, your supportive companion. How are you feeling today?</p>
+                </div>
+            </div>
+        `;
+    }
+
+    // Clear trusted contacts
+    const contactsList = document.getElementById('contactsList');
+    if (contactsList) {
+        contactsList.innerHTML = '<p class="empty-state">Add someone you trust for quick access during tough moments</p>';
+    }
+
+    // Reset user name display
+    const userName = document.getElementById('userName');
+    if (userName) userName.textContent = 'Friend';
+
+    console.log('✅ All displayed data cleared');
+    },
+
+    init() {
+        console.log('ReKindle App Initialized');
+        
+        // Check if data was just reset
+        const hasData = localStorage.getItem('rekindle_data');
+        if (!hasData) {
+            console.log('No data found - starting fresh');
+            this.clearAllDisplayedData();
+        }
+        
+        this.updateDashboard();
+        this.updateProgressPage();
+        this.updateEmergencyPage();
+        this.loadAchievements();
+        
+        // Update every minute
+        setInterval(() => {
+            this.updateDashboard();
+        }, 60000);
+    },
+
     // Generate summary report
     generateSummaryReport() {
         const stats = AppData.stats;

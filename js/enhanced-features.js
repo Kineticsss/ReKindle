@@ -162,55 +162,105 @@ const EnhancedFeatures = {
     },
 
     updateDailyTab() {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        
-        const todayLogs = AppData.cravingLogs.filter(log => {
-            const logDate = new Date(log.timestamp);
-            logDate.setHours(0, 0, 0, 0);
-            return logDate.getTime() === today.getTime();
-        });
-        
-        // Update stats
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Check if AppData exists and has logs
+    if (!AppData || !AppData.cravingLogs) {
         const todayCravingsEl = document.getElementById('todayCravings');
         const todayResistedEl = document.getElementById('todayResisted');
-        
-        if (todayCravingsEl) {
-            todayCravingsEl.textContent = todayLogs.length;
-        }
-        
-        if (todayResistedEl) {
-            todayResistedEl.textContent = todayLogs.filter(log => log.resisted).length;
-        }
-        
-        // Update log list
         const todayLogHistory = document.getElementById('todayLogHistory');
+        
+        if (todayCravingsEl) todayCravingsEl.textContent = '0';
+        if (todayResistedEl) todayResistedEl.textContent = '0';
         if (todayLogHistory) {
-            if (todayLogs.length === 0) {
-                todayLogHistory.innerHTML = '<p class="empty-state">No logs today yet. You\'re doing great! 🌟</p>';
-            } else {
-                todayLogHistory.innerHTML = '';
-                todayLogs.forEach(log => {
-                    todayLogHistory.innerHTML += CravingLog.formatLog(log);
-                });
-            }
+            todayLogHistory.innerHTML = '<p class="empty-state">No logs today yet. You\'re doing great! 🌟</p>';
         }
-    },
+        return;
+    }
+    
+    const todayLogs = AppData.cravingLogs.filter(log => {
+        const logDate = new Date(log.timestamp);
+        logDate.setHours(0, 0, 0, 0);
+        return logDate.getTime() === today.getTime();
+    });
+    
+    // Update stats
+    const todayCravingsEl = document.getElementById('todayCravings');
+    const todayResistedEl = document.getElementById('todayResisted');
+    
+    if (todayCravingsEl) {
+        todayCravingsEl.textContent = todayLogs.length;
+    }
+    
+    if (todayResistedEl) {
+        todayResistedEl.textContent = todayLogs.filter(log => log.resisted).length;
+    }
+    
+    // Update log list
+    const todayLogHistory = document.getElementById('todayLogHistory');
+    if (todayLogHistory) {
+        if (todayLogs.length === 0) {
+            todayLogHistory.innerHTML = '<p class="empty-state">No logs today yet. You\'re doing great! 🌟</p>';
+        } else {
+            todayLogHistory.innerHTML = '';
+            todayLogs.forEach(log => {
+                todayLogHistory.innerHTML += CravingLog.formatLog(log);
+            });
+        }
+    }
+},
 
     updateWeeklyTab() {
-        // Placeholder for weekly data
-        console.log('Weekly tab updated');
-    },
-
-    updateMonthlyTab() {
-        // Already has content, just ensure it's current
-        if (window.App) {
-            App.updateMilestones();
+        // Check if data exists
+        if (!AppData || !AppData.cravingLogs || AppData.cravingLogs.length === 0) {
+            const weeklyTotal = document.getElementById('weeklyTotal');
+            const weeklyResisted = document.getElementById('weeklyResisted');
+            const weeklyRate = document.getElementById('weeklyRate');
+            const weeklyInsights = document.getElementById('weeklyInsights');
+            
+            if (weeklyTotal) weeklyTotal.textContent = '0';
+            if (weeklyResisted) weeklyResisted.textContent = '0';
+            if (weeklyRate) weeklyRate.textContent = '0%';
+            if (weeklyInsights) {
+                weeklyInsights.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: var(--space-md);">No data yet. Start logging to see insights!</p>';
+            }
+            
+            // Clear chart
+            const canvas = document.getElementById('weeklyChart');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            return;
+        }
+        
+        // Render chart if data exists
+        if (window.Charts && typeof window.Charts.renderWeeklyChart === 'function') {
+            setTimeout(() => {
+                window.Charts.renderWeeklyChart();
+            }, 100);
         }
     },
 
     updateAllTimeTab() {
-        // Update all-time logs
+        // Check if data exists
+        if (!AppData || !AppData.cravingLogs || AppData.cravingLogs.length === 0) {
+            const logHistory = document.getElementById('logHistory');
+            if (logHistory) {
+                logHistory.innerHTML = '<p class="empty-state">No logs yet. Start by logging your first craving!</p>';
+            }
+            
+            // Lock all milestones
+            const milestones = document.querySelectorAll('.milestone');
+            milestones.forEach(milestone => {
+                milestone.classList.remove('completed');
+                milestone.classList.add('locked');
+            });
+            return;
+        }
+        
+        // Update content if data exists
         if (window.App) {
             App.updateLogHistory();
             App.updateMilestones();
@@ -463,6 +513,19 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof window !== 'undefined') {
     window.EnhancedFeatures = EnhancedFeatures;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const progressLink = document.querySelector('.nav-link[data-page="progress"]');
+    if (progressLink) {
+        progressLink.addEventListener('click', () => {
+            setTimeout(() => {
+                if (EnhancedFeatures?.updateDailyTab) {
+                    EnhancedFeatures.updateDailyTab();
+                }
+            }, 200);
+        });
+    }
+});
 
 // ===================================
 // KEYBOARD SHORTCUTS HELP
