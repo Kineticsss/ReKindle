@@ -30,18 +30,6 @@
                 <li><a href="#emergency" class="nav-link" data-page="emergency">Emergency</a></li>
                 <li><a href="#help" class="nav-link" data-page="help">Help</a></li>
                 <div class="accessibility-controls">
-                    <button id="decreaseText" class="accessibility-btn" aria-label="Decrease text size" title="Smaller text">
-                        A-
-                    </button>
-                    <button id="resetText" class="accessibility-btn" aria-label="Reset text size" title="Normal text">
-                        A
-                    </button>
-                    <button id="increaseText" class="accessibility-btn" aria-label="Increase text size" title="Larger text">
-                        A+
-                    </button>
-                    <button id="highContrast" class="accessibility-btn" aria-label="Toggle high contrast mode" title="High contrast">
-                        ◐
-                    </button>
                 </div>
             </ul>
             <button class="settings-btn" id="settingsBtn" aria-label="Settings">⚙️</button>
@@ -713,13 +701,17 @@
     </div>
 
     <!-- Settings Modal -->
-    <div class="modal" id="settingsModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Settings</h2>
-                <button class="close-modal" data-modal="settingsModal" aria-label="Close">&times;</button>
-            </div>
-            <div class="settings-content">
+<div class="modal" id="settingsModal" role="dialog" aria-labelledby="settings-title" aria-modal="true">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="settings-title">Settings</h2>
+            <button class="close-modal" data-modal="settingsModal" aria-label="Close settings">&times;</button>
+        </div>
+        <div class="settings-content">
+            <!-- Personal Settings -->
+            <div class="settings-section">
+                <h3 class="settings-section-title">Personal</h3>
+                
                 <div class="setting-group">
                     <label for="userNameInput">Your Name</label>
                     <input type="text" id="userNameInput" placeholder="Enter your name">
@@ -732,12 +724,60 @@
                         <option value="fil">Filipino</option>
                     </select>
                 </div>
+            </div>
 
+            <!-- Display Settings -->
+            <div class="settings-section">
+                <h3 class="settings-section-title">Display</h3>
+                
+                <div class="setting-group">
+                    <label for="themeSelect">Theme</label>
+                    <select id="themeSelect">
+                        <option value="dark">Dark Mode (Default)</option>
+                        <option value="light">Light Mode</option>
+                        <option value="auto">Auto (System)</option>
+                    </select>
+                    <p class="setting-description">Choose your preferred color theme</p>
+                </div>
+
+                <div class="setting-group">
+                    <label for="textSizeSelect">Text Size</label>
+                    <select id="textSizeSelect">
+                        <option value="small">Small</option>
+                        <option value="normal">Normal (Default)</option>
+                        <option value="large">Large</option>
+                        <option value="xlarge">Extra Large</option>
+                    </select>
+                    <p class="setting-description">Adjust text size for better readability</p>
+                </div>
+
+                <div class="setting-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="highContrastToggle">
+                        <span>High Contrast Mode</span>
+                    </label>
+                    <p class="setting-description">Increase contrast for better visibility</p>
+                </div>
+
+                <div class="setting-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="reducedMotionToggle">
+                        <span>Reduce Animations</span>
+                    </label>
+                    <p class="setting-description">Minimize movement for sensitive users</p>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="settings-section">
+                <h3 class="settings-section-title">Notifications</h3>
+                
                 <div class="setting-group">
                     <label class="checkbox-label">
                         <input type="checkbox" id="notificationsToggle" checked>
                         <span>Enable Notifications</span>
                     </label>
+                    <p class="setting-description">Show achievement and reminder notifications</p>
                 </div>
 
                 <div class="setting-group">
@@ -745,12 +785,37 @@
                         <input type="checkbox" id="soundToggle" checked>
                         <span>Sound Effects</span>
                     </label>
+                    <p class="setting-description">Play sounds for interactions and achievements</p>
                 </div>
+            </div>
 
-                <button class="danger-btn" id="resetDataBtn">Reset All Data</button>
+            <!-- Data Management -->
+            <div class="settings-section">
+                <h3 class="settings-section-title">Data Management</h3>
+                
+                <button class="secondary-btn" id="exportDataBtn">
+                    <span>📥</span> Export Data
+                </button>
+                <p class="setting-description">Download your data as JSON backup</p>
+
+                <button class="danger-btn" id="resetDataBtn">
+                    <span>⚠️</span> Reset All Data
+                </button>
+                <p class="setting-description">This will delete all your progress permanently</p>
+            </div>
+
+            <!-- App Info -->
+            <div class="settings-section">
+                <h3 class="settings-section-title">About</h3>
+                <p class="app-info">
+                    <strong>ReKindle</strong> v1.0<br>
+                    HCI Final Project<br>
+                    Built with ❤️ for recovery support
+                </p>
             </div>
         </div>
     </div>
+</div>
 
     <div class="modal" id="onboardingModal">
     <div class="modal-content">
@@ -918,6 +983,7 @@
     <script src="js/calmbot.js"></script>
     <script src="js/app.js"></script>
     <script src="js/mock-data.js"></script>
-    <script src="enchancements.js"></script>
+    <script src="js/enhanced-features.js"></script>
+    <script src="js/settings.js"></script>
 </body>
 </html>
