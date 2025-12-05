@@ -1,0 +1,226 @@
+body.light-mode {
+    --primary-purple: #7C3AED;
+    --primary-dark: #5B21B6;
+    --primary-light: #8B5CF6;
+    --accent-neon: #A78BFA;
+    --accent-green: #059669;
+    --accent-blue: #2563EB;
+    --accent-red: #DC2626;
+
+    --bg-dark: #F9FAFB;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F3F4F6;
+    --bg-input: #F3F4F6;
+
+    --text-primary: #111827;
+    --text-secondary: #374151;
+    --text-muted: #6B7280;
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+    --shadow-glow: 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
+body.light-mode .main-nav {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+body.light-mode .logo {
+    color: var(--primary-purple);
+}
+
+body.light-mode .nav-link {
+    color: var(--text-secondary);
+}
+
+body.light-mode .nav-link:hover {
+    background-color: #F3F4F6;
+    color: var(--primary-purple);
+}
+
+body.light-mode .nav-link.active {
+    background-color: var(--primary-purple);
+    color: white;
+}
+
+body.light-mode .settings-btn {
+    background-color: #F3F4F6;
+    color: var(--text-primary);
+}
+
+body.light-mode .settings-btn:hover {
+    background-color: #E5E7EB;
+}
+
+body.light-mode .stat-card {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+}
+
+body.light-mode .stat-card:hover {
+    border-color: var(--primary-purple);
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15);
+}
+
+body.light-mode .journey-path,
+body.light-mode .motivation-card,
+body.light-mode .achievement-item,
+body.light-mode .progress-card,
+body.light-mode .hotline-card,
+body.light-mode .community-post,
+body.light-mode .log-item {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+}
+
+body.light-mode .progress-bar {
+    background-color: #E5E7EB;
+}
+
+body.light-mode .action-btn {
+    background-color: white;
+    border-color: var(--primary-purple);
+    color: var(--text-primary);
+}
+
+body.light-mode .action-btn:hover {
+    background-color: var(--primary-purple);
+    color: white;
+}
+
+body.light-mode .modal {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode .modal-content {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+}
+
+body.light-mode .modal-header {
+    border-bottom: 1px solid #E5E7EB;
+}
+
+body.light-mode .form-group input[type="text"],
+body.light-mode .form-group input[type="email"],
+body.light-mode .form-group select,
+body.light-mode .form-group textarea {
+    background-color: #F9FAFB;
+    border-color: #D1D5DB;
+    color: var(--text-primary);
+}
+
+body.light-mode .form-group input:focus,
+body.light-mode .form-group select:focus,
+body.light-mode .form-group textarea:focus {
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+body.light-mode .chat-container {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+}
+
+body.light-mode .chat-message.bot .message-bubble {
+    background-color: var(--primary-purple);
+    color: white;
+}
+
+body.light-mode .chat-message.user .message-bubble {
+    background-color: #F3F4F6;
+    color: var(--text-primary);
+}
+
+body.light-mode .chat-input {
+    background-color: #F9FAFB;
+    border-color: #D1D5DB;
+    color: var(--text-primary);
+}
+
+body.light-mode .tab-btn.active {
+    border-bottom-color: var(--primary-purple);
+    background-color: rgba(124, 58, 237, 0.05);
+}
+
+body.light-mode .faq-item {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+}
+
+body.light-mode .faq-question:hover {
+    background-color: #F9FAFB;
+}
+
+body.light-mode .tip-card {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+}
+
+body.light-mode .empty-state {
+    background-color: white;
+    border-color: #D1D5DB;
+    color: var(--text-muted);
+}
+
+body.light-mode .toggle-slider {
+    background-color: #D1D5DB;
+}
+
+body.light-mode .toggle-switch input:checked + .toggle-slider {
+    background-color: var(--primary-purple);
+}
+
+body.light-mode .setting-row {
+    background-color: #F9FAFB;
+}
+
+body.light-mode .setting-row:hover {
+    background-color: #F3F4F6;
+}
+
+body.light-mode .breathing-circle::before {
+    filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.4));
+}
+
+/* Ensure proper contrast in light mode */
+body.light-mode .page-header h1 {
+    background: linear-gradient(135deg, #7C3AED, #A78BFA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.light-mode .chart-container {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+}
+
+body.light-mode .milestone,
+body.light-mode .metric {
+    background-color: #F9FAFB;
+}
+
+body.light-mode .stats-summary {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+}
+
+body.light-mode .weekly-summary .summary-card {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+}
+
+body.light-mode .insights-section {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+}
+
+body.light-mode .app-info-box {
+    background: linear-gradient(135deg,
+        rgba(124, 58, 237, 0.08),
+        rgba(167, 139, 246, 0.08));
+    border-color: rgba(124, 58, 237, 0.2);
+}

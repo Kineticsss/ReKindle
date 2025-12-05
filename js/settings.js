@@ -345,8 +345,20 @@ function openSettingsModal() {
     }
     
     const languageSelect = document.getElementById('languageSelect');
-    if (languageSelect && AppData) {
-        languageSelect.value = AppData.user.language;
+    if (languageSelect) {
+        languageSelect.value = this.defaults.language;
+        languageSelect.addEventListener('change', (e) => {
+            this.defaults.language = e.target.value;
+            AppData.user.language = e.target.value;
+            this.saveSettings();
+            AppData.save();
+
+            if (window.Translations) {
+                Translations.setLanguage(e.target.value);
+            }
+            
+            Navigation.showNotification('Language updated!', 'success', 2000);
+        });
     }
     
     const notificationsToggle = document.getElementById('notificationsToggle');
