@@ -1,8 +1,3 @@
-// ===================================
-// ENHANCED FEATURES JAVASCRIPT
-// Add to app.js or create as separate file
-// ===================================
-
 const EnhancedFeatures = {
     init() {
         this.setupOnboarding();
@@ -12,24 +7,18 @@ const EnhancedFeatures = {
         this.setupBackToTop();
     },
 
-    // ===================================
-    // ONBOARDING
-    // ===================================
     setupOnboarding() {
         const onboardingForm = document.getElementById('onboardingForm');
-        
-        // Check if user has completed onboarding
+
         const hasOnboarded = localStorage.getItem('rekindle_onboarded');
         
         if (!hasOnboarded) {
-            // Show onboarding modal
             setTimeout(() => {
                 Navigation.openModal('onboardingModal');
             }, 500);
         }
         
         if (onboardingForm) {
-            // Set max date to today
             const startDateInput = document.getElementById('startDate');
             if (startDateInput) {
                 const today = new Date().toISOString().split('T')[0];
@@ -50,14 +39,12 @@ const EnhancedFeatures = {
             .map(cb => cb.value);
         const motivation = document.getElementById('motivationReason').value;
         const startDate = document.getElementById('startDate').value;
-        
-        // Validate
+
         if (!name || goals.length === 0) {
             Navigation.showNotification('Please fill in all required fields', 'error');
             return;
         }
-        
-        // Save to AppData
+
         AppData.user.name = name;
         AppData.user.motivation = motivation;
         
@@ -71,25 +58,18 @@ const EnhancedFeatures = {
         
         AppData.updateStreaks();
         AppData.save();
-        
-        // Mark as onboarded
+
         localStorage.setItem('rekindle_onboarded', 'true');
-        
-        // Close modal
+
         Navigation.closeModal('onboardingModal');
-        
-        // Show welcome
+
         Navigation.showNotification(`Welcome, ${name}! Your journey begins now. 🚀`, 'success', 4000);
-        
-        // Update display
+
         if (window.App) {
             App.updateDashboard();
         }
     },
 
-    // ===================================
-    // TABBED INTERFACE
-    // ===================================
     setupTabs() {
         const tabButtons = document.querySelectorAll('.tab-btn');
         
@@ -97,8 +77,7 @@ const EnhancedFeatures = {
             button.addEventListener('click', (e) => {
                 const targetTab = button.getAttribute('data-tab');
                 this.switchTab(targetTab);
-                
-                // Update ARIA attributes
+
                 tabButtons.forEach(btn => {
                     btn.setAttribute('aria-selected', 'false');
                     btn.classList.remove('active');
@@ -106,8 +85,7 @@ const EnhancedFeatures = {
                 button.setAttribute('aria-selected', 'true');
                 button.classList.add('active');
             });
-            
-            // Keyboard navigation
+
             button.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
                     const buttons = Array.from(tabButtons);
@@ -128,18 +106,15 @@ const EnhancedFeatures = {
     },
 
     switchTab(tabName) {
-        // Hide all tab contents
         const tabContents = document.querySelectorAll('.tab-content');
         tabContents.forEach(content => {
             content.classList.remove('active');
         });
-        
-        // Show selected tab
+
         const targetContent = document.getElementById(`tab-${tabName}`);
         if (targetContent) {
             targetContent.classList.add('active');
-            
-            // Update content based on tab
+
             this.updateTabContent(tabName);
         }
     },
@@ -164,8 +139,7 @@ const EnhancedFeatures = {
     updateDailyTab() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
-    // Check if AppData exists and has logs
+
     if (!AppData || !AppData.cravingLogs) {
         const todayCravingsEl = document.getElementById('todayCravings');
         const todayResistedEl = document.getElementById('todayResisted');
@@ -184,8 +158,7 @@ const EnhancedFeatures = {
         logDate.setHours(0, 0, 0, 0);
         return logDate.getTime() === today.getTime();
     });
-    
-    // Update stats
+
     const todayCravingsEl = document.getElementById('todayCravings');
     const todayResistedEl = document.getElementById('todayResisted');
     
@@ -196,8 +169,7 @@ const EnhancedFeatures = {
     if (todayResistedEl) {
         todayResistedEl.textContent = todayLogs.filter(log => log.resisted).length;
     }
-    
-    // Update log list
+
     const todayLogHistory = document.getElementById('todayLogHistory');
     if (todayLogHistory) {
         if (todayLogs.length === 0) {
@@ -212,7 +184,6 @@ const EnhancedFeatures = {
 },
 
     updateWeeklyTab() {
-        // Check if data exists
         if (!AppData || !AppData.cravingLogs || AppData.cravingLogs.length === 0) {
             const weeklyTotal = document.getElementById('weeklyTotal');
             const weeklyResisted = document.getElementById('weeklyResisted');
@@ -225,8 +196,7 @@ const EnhancedFeatures = {
             if (weeklyInsights) {
                 weeklyInsights.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: var(--space-md);">No data yet. Start logging to see insights!</p>';
             }
-            
-            // Clear chart
+
             const canvas = document.getElementById('weeklyChart');
             if (canvas) {
                 const ctx = canvas.getContext('2d');
@@ -234,8 +204,7 @@ const EnhancedFeatures = {
             }
             return;
         }
-        
-        // Render chart if data exists
+
         if (window.Charts && typeof window.Charts.renderWeeklyChart === 'function') {
             setTimeout(() => {
                 window.Charts.renderWeeklyChart();
@@ -244,14 +213,12 @@ const EnhancedFeatures = {
     },
 
     updateAllTimeTab() {
-        // Check if data exists
         if (!AppData || !AppData.cravingLogs || AppData.cravingLogs.length === 0) {
             const logHistory = document.getElementById('logHistory');
             if (logHistory) {
                 logHistory.innerHTML = '<p class="empty-state">No logs yet. Start by logging your first craving!</p>';
             }
-            
-            // Lock all milestones
+
             const milestones = document.querySelectorAll('.milestone');
             milestones.forEach(milestone => {
                 milestone.classList.remove('completed');
@@ -259,17 +226,13 @@ const EnhancedFeatures = {
             });
             return;
         }
-        
-        // Update content if data exists
+
         if (window.App) {
             App.updateLogHistory();
             App.updateMilestones();
         }
     },
 
-    // ===================================
-    // FAQ COLLAPSIBLE
-    // ===================================
     setupFAQ() {
         const faqQuestions = document.querySelectorAll('.faq-question');
         
@@ -277,8 +240,7 @@ const EnhancedFeatures = {
             question.addEventListener('click', () => {
                 const faqItem = question.parentElement;
                 const isActive = faqItem.classList.contains('active');
-                
-                // Close all other FAQs
+
                 document.querySelectorAll('.faq-item').forEach(item => {
                     item.classList.remove('active');
                     const btn = item.querySelector('.faq-question');
@@ -286,8 +248,7 @@ const EnhancedFeatures = {
                         btn.setAttribute('aria-expanded', 'false');
                     }
                 });
-                
-                // Toggle current FAQ
+
                 if (!isActive) {
                     faqItem.classList.add('active');
                     question.setAttribute('aria-expanded', 'true');
@@ -295,8 +256,7 @@ const EnhancedFeatures = {
                     question.setAttribute('aria-expanded', 'false');
                 }
             });
-            
-            // Keyboard support
+
             question.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -306,13 +266,9 @@ const EnhancedFeatures = {
         });
     },
 
-    // ===================================
-    // ACCESSIBILITY FEATURES
-    // ===================================
     setupAccessibility() {
-        let textSize = 'normal'; // normal, large, xlarge, small
-        
-        // Text size controls
+        let textSize = 'normal';
+
         const increaseBtn = document.getElementById('increaseText');
         const decreaseBtn = document.getElementById('decreaseText');
         const resetBtn = document.getElementById('resetText');
@@ -361,8 +317,7 @@ const EnhancedFeatures = {
                 Navigation.showNotification('Text size reset', 'success', 1500);
             });
         }
-        
-        // High contrast mode
+
         const highContrastBtn = document.getElementById('highContrast');
         if (highContrastBtn) {
             highContrastBtn.addEventListener('click', () => {
@@ -377,8 +332,7 @@ const EnhancedFeatures = {
                 );
             });
         }
-        
-        // Load saved preferences
+
         const savedTextSize = localStorage.getItem('rekindle_textsize');
         if (savedTextSize && savedTextSize !== 'normal') {
             document.body.classList.add(`text-${savedTextSize}`);
@@ -389,47 +343,67 @@ const EnhancedFeatures = {
         if (savedHighContrast === 'true') {
             document.body.classList.add('high-contrast');
         }
-        
-        // Keyboard shortcuts
+
         document.addEventListener('keydown', (e) => {
-            // Alt + H = Help page
+
             if (e.altKey && e.key === 'h') {
                 e.preventDefault();
                 Navigation.navigateTo('help');
             }
-            
-            // Alt + D = Dashboard
+
             if (e.altKey && e.key === 'd') {
                 e.preventDefault();
                 Navigation.navigateTo('dashboard');
             }
-            
-            // Alt + L = Log craving
+
             if (e.altKey && e.key === 'l') {
                 e.preventDefault();
                 Navigation.openModal('cravingModal');
             }
-            
-            // Alt + B = Breathing exercise
+
             if (e.altKey && e.key === 'b') {
                 e.preventDefault();
                 Navigation.openModal('breathingModal');
             }
+
+            if (e.altKey && e.key === 'm') {
+                e.preventDefault();
+                Navigation.navigateTo('motivation');
+            }
+
+            if (e.altKey && e.key === 'p') {
+                e.preventDefault();
+                Navigation.navigateTo('progress');
+            }
+
+            if (e.altKey && e.key === 'c') {
+                e.preventDefault();
+                Navigation.navigateTo('calmbot');
+            }
+
+            if (e.altKey && e.key === 'e') {
+                e.preventDefault();
+                Navigation.navigateTo('emergency');
+            }
+
+            if (e.altKey && e.key === 's') {
+                e.preventDefault();
+                Navigation.openModal('settingsModal');
+            }
+
+            if (e.key === 'Escape') {
+                Navigation.closeAllModals();
+            }
         });
     },
 
-    // ===================================
-    // BACK TO TOP BUTTON
-    // ===================================
     setupBackToTop() {
-        // Create back to top button
         const backToTopBtn = document.createElement('button');
         backToTopBtn.className = 'back-to-top';
         backToTopBtn.innerHTML = '↑';
         backToTopBtn.setAttribute('aria-label', 'Back to top');
         document.body.appendChild(backToTopBtn);
-        
-        // Show/hide based on scroll
+
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
                 backToTopBtn.classList.add('visible');
@@ -437,8 +411,7 @@ const EnhancedFeatures = {
                 backToTopBtn.classList.remove('visible');
             }
         });
-        
-        // Scroll to top on click
+
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({
                 top: 0,
@@ -447,23 +420,18 @@ const EnhancedFeatures = {
         });
     },
 
-    // ===================================
-    // FORM VALIDATION
-    // ===================================
     validateForm(formElement) {
         let isValid = true;
         const inputs = formElement.querySelectorAll('input[required], textarea[required], select[required]');
         
         inputs.forEach(input => {
-            // Remove previous error messages
             const existingError = input.parentElement.querySelector('.error-message');
             if (existingError) {
                 existingError.remove();
             }
             
             input.classList.remove('input-error');
-            
-            // Check validity
+
             if (!input.value.trim()) {
                 isValid = false;
                 input.classList.add('input-error');
@@ -478,9 +446,6 @@ const EnhancedFeatures = {
         return isValid;
     },
 
-    // ===================================
-    // LOADING OVERLAY
-    // ===================================
     showLoading(message = 'Loading...') {
         const overlay = document.createElement('div');
         overlay.className = 'loading-overlay';
@@ -504,12 +469,10 @@ const EnhancedFeatures = {
     }
 };
 
-// Initialize enhanced features
 document.addEventListener('DOMContentLoaded', () => {
     EnhancedFeatures.init();
 });
 
-// Make available globally
 if (typeof window !== 'undefined') {
     window.EnhancedFeatures = EnhancedFeatures;
 }
@@ -527,13 +490,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// ===================================
-// KEYBOARD SHORTCUTS HELP
-// ===================================
 console.log('%c🔥 ReKindle Keyboard Shortcuts 🔥', 'color: #8B5CF6; font-size: 14px; font-weight: bold;');
 console.log('Alt + H: Open Help page');
 console.log('Alt + D: Go to Dashboard');
 console.log('Alt + L: Log a craving');
 console.log('Alt + B: Start breathing exercise');
+console.log('Alt + M: Open motivation quotes');
 console.log('Esc: Close modals');
 console.log('Arrow keys: Navigate tabs');

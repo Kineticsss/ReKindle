@@ -1,9 +1,4 @@
-// ===================================
-// DATA MANAGEMENT MODULE
-// ===================================
-
 const AppData = {
-    // User data
     user: {
         name: 'Friend',
         language: 'en',
@@ -15,7 +10,6 @@ const AppData = {
         }
     },
 
-    // Stats
     stats: {
         smokingStreak: 0,
         drinkingStreak: 0,
@@ -24,10 +18,8 @@ const AppData = {
         totalLogs: 0
     },
 
-    // Craving logs
     cravingLogs: [],
 
-    // Achievements
     achievements: [
         { id: 'first_day', name: 'First Day', desc: 'Complete your first day clean', icon: '🏆', unlocked: false },
         { id: 'week_warrior', name: 'Week Warrior', desc: 'Stay clean for 7 days', icon: '⭐', unlocked: false },
@@ -36,13 +28,10 @@ const AppData = {
         { id: 'resist_50', name: 'Resistance Hero', desc: 'Resist 50 cravings', icon: '🦸', unlocked: false }
     ],
 
-    // Chat history
     chatHistory: [],
 
-    // Trusted contacts
     trustedContacts: [],
 
-    // Initialize data from localStorage
     init() {
         const savedData = localStorage.getItem('rekindle_data');
         if (savedData) {
@@ -65,12 +54,10 @@ const AppData = {
                 console.error('Error loading saved data:', e);
             }
         }
-        
-        // Calculate streaks
+
         this.updateStreaks();
     },
 
-    // Save data to localStorage
     save() {
         const dataToSave = {
             user: this.user,
@@ -88,39 +75,33 @@ const AppData = {
         }
     },
 
-    // Update streaks based on logs
     updateStreaks() {
         const now = new Date();
-        
-        // Calculate smoking streak
+
         if (this.user.smokingStartDate) {
             const startDate = new Date(this.user.smokingStartDate);
             const daysDiff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
             this.stats.smokingStreak = Math.max(0, daysDiff);
         }
-        
-        // Calculate drinking streak
+
         if (this.user.drinkingStartDate) {
             const startDate = new Date(this.user.drinkingStartDate);
             const daysDiff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
             this.stats.drinkingStreak = Math.max(0, daysDiff);
         }
 
-        // Calculate money saved (estimated)
-        const smokingDailyCost = 100; // ₱100 per day
-        const drinkingDailyCost = 150; // ₱150 per day
+        const smokingDailyCost = 100;
+        const drinkingDailyCost = 150;
         
-        this.stats.moneySaved = 
+        this.stats.moneySaved =
             (this.stats.smokingStreak * smokingDailyCost) +
             (this.stats.drinkingStreak * drinkingDailyCost);
 
-        // Count resisted cravings
         this.stats.cravingsResisted = this.cravingLogs.filter(log => log.resisted).length;
         
         this.checkAchievements();
     },
 
-    // Add a craving log
     addCravingLog(logData) {
         const log = {
             id: Date.now(),
@@ -145,38 +126,32 @@ const AppData = {
         return log;
     },
 
-    // Check and unlock achievements
     checkAchievements() {
         let newlyUnlocked = [];
 
-        // First day achievement
-        if (!this.achievements[0].unlocked && 
+        if (!this.achievements[0].unlocked &&
             (this.stats.smokingStreak >= 1 || this.stats.drinkingStreak >= 1)) {
             this.achievements[0].unlocked = true;
             newlyUnlocked.push(this.achievements[0]);
         }
 
-        // Week warrior
-        if (!this.achievements[1].unlocked && 
+        if (!this.achievements[1].unlocked &&
             (this.stats.smokingStreak >= 7 || this.stats.drinkingStreak >= 7)) {
             this.achievements[1].unlocked = true;
             newlyUnlocked.push(this.achievements[1]);
         }
 
-        // Month master
-        if (!this.achievements[2].unlocked && 
+        if (!this.achievements[2].unlocked &&
             (this.stats.smokingStreak >= 30 || this.stats.drinkingStreak >= 30)) {
             this.achievements[2].unlocked = true;
             newlyUnlocked.push(this.achievements[2]);
         }
 
-        // Resist 10
         if (!this.achievements[3].unlocked && this.stats.cravingsResisted >= 10) {
             this.achievements[3].unlocked = true;
             newlyUnlocked.push(this.achievements[3]);
         }
 
-        // Resist 50
         if (!this.achievements[4].unlocked && this.stats.cravingsResisted >= 50) {
             this.achievements[4].unlocked = true;
             newlyUnlocked.push(this.achievements[4]);
@@ -185,7 +160,6 @@ const AppData = {
         return newlyUnlocked;
     },
 
-    // Add chat message
     addChatMessage(message, isBot = false) {
         const chatMessage = {
             id: Date.now(),
@@ -200,7 +174,6 @@ const AppData = {
         return chatMessage;
     },
 
-    // Add trusted contact
     addTrustedContact(contact) {
         const newContact = {
             id: Date.now(),
@@ -215,19 +188,16 @@ const AppData = {
         return newContact;
     },
 
-    // Remove trusted contact
     removeTrustedContact(contactId) {
         this.trustedContacts = this.trustedContacts.filter(c => c.id !== contactId);
         this.save();
     },
 
-    // Update user settings
     updateSettings(settings) {
         Object.assign(this.user.settings, settings);
         this.save();
     },
 
-    // Set journey start date
     setJourneyStartDate(type, date = new Date()) {
         if (type === 'smoking') {
             this.user.smokingStartDate = date.toISOString();
@@ -239,15 +209,12 @@ const AppData = {
         this.save();
     },
 
-    // Reset all data
 resetAllData() {
     if (confirm('⚠️ Are you sure you want to reset ALL your data?\n\nThis will:\n• Delete all craving logs\n• Reset all stats and streaks\n• Remove all achievements\n• Clear chat history\n• Delete trusted contacts\n\nThis CANNOT be undone!')) {
-        // Show loading
         if (typeof Navigation !== 'undefined') {
             Navigation.showNotification('Resetting all data...', 'success', 2000);
         }
-        
-        // Clear ALL localStorage keys related to ReKindle
+
         const keysToRemove = [
             'rekindle_data',
             'rekindle_welcomed',
@@ -260,8 +227,7 @@ resetAllData() {
         keysToRemove.forEach(key => {
             localStorage.removeItem(key);
         });
-        
-        // Reset to factory defaults
+
         this.user = {
             name: 'Friend',
             language: 'en',
@@ -288,13 +254,11 @@ resetAllData() {
         this.achievements.forEach(achievement => {
             achievement.unlocked = false;
         });
-        
-        // Show success message
+
         if (typeof Navigation !== 'undefined') {
             Navigation.showNotification('✅ All data has been reset!', 'success', 2000);
         }
-        
-        // Reload page after a delay
+
         setTimeout(() => {
             location.reload();
         }, 2000);
@@ -305,17 +269,14 @@ resetAllData() {
         return false;
     },
 
-    // Get recent logs
     getRecentLogs(limit = 10) {
         return this.cravingLogs.slice(0, limit);
     },
 
-    // Get logs by type
     getLogsByType(type) {
         return this.cravingLogs.filter(log => log.type === type || log.type === 'both');
     },
 
-    // Get achievement progress
     getAchievementProgress() {
         const total = this.achievements.length;
         const unlocked = this.achievements.filter(a => a.unlocked).length;
@@ -327,11 +288,9 @@ resetAllData() {
     }
 };
 
-// Initialize data on load
 document.addEventListener('DOMContentLoaded', () => {
     AppData.init();
-    
-    // Set initial journey dates if not set
+
     if (!AppData.user.smokingStartDate) {
         AppData.setJourneyStartDate('smoking', new Date());
     }

@@ -1,5 +1,4 @@
 const EnhancedSettings = {
-    // Default settings
     defaults: {
         theme: 'dark',
         textSize: 'normal',
@@ -16,7 +15,6 @@ const EnhancedSettings = {
         this.applySettings();
     },
 
-    // Load settings from localStorage
     loadSettings() {
         const saved = localStorage.getItem('rekindle_display_settings');
         if (saved) {
@@ -27,18 +25,15 @@ const EnhancedSettings = {
                 console.error('Error loading settings:', e);
             }
         }
-        
-        // Also check for system preference
+
         if (this.defaults.theme === 'auto') {
             this.applySystemTheme();
         }
     },
 
-    // Save settings to localStorage
     saveSettings() {
         localStorage.setItem('rekindle_display_settings', JSON.stringify(this.defaults));
-        
-        // Also save to AppData for compatibility
+
         if (typeof AppData !== 'undefined') {
             AppData.user.settings = {
                 ...AppData.user.settings,
@@ -53,9 +48,7 @@ const EnhancedSettings = {
         }
     },
 
-    // Setup all event listeners
     setupEventListeners() {
-        // Theme selector
         const themeSelect = document.getElementById('themeSelect');
         if (themeSelect) {
             themeSelect.value = this.defaults.theme;
@@ -67,7 +60,6 @@ const EnhancedSettings = {
             });
         }
 
-        // Text size selector
         const textSizeSelect = document.getElementById('textSizeSelect');
         if (textSizeSelect) {
             textSizeSelect.value = this.defaults.textSize;
@@ -79,7 +71,6 @@ const EnhancedSettings = {
             });
         }
 
-        // High contrast toggle
         const highContrastToggle = document.getElementById('highContrastToggle');
         if (highContrastToggle) {
             highContrastToggle.checked = this.defaults.highContrast;
@@ -95,7 +86,6 @@ const EnhancedSettings = {
             });
         }
 
-        // Reduced motion toggle
         const reducedMotionToggle = document.getElementById('reducedMotionToggle');
         if (reducedMotionToggle) {
             reducedMotionToggle.checked = this.defaults.reducedMotion;
@@ -111,7 +101,6 @@ const EnhancedSettings = {
             });
         }
 
-        // Notifications toggle
         const notificationsToggle = document.getElementById('notificationsToggle');
         if (notificationsToggle) {
             notificationsToggle.checked = this.defaults.notifications;
@@ -121,7 +110,6 @@ const EnhancedSettings = {
             });
         }
 
-        // Sound toggle
         const soundToggle = document.getElementById('soundToggle');
         if (soundToggle) {
             soundToggle.checked = this.defaults.sound;
@@ -131,7 +119,6 @@ const EnhancedSettings = {
             });
         }
 
-        // User name input
         const userNameInput = document.getElementById('userNameInput');
         if (userNameInput) {
             userNameInput.value = AppData.user.name;
@@ -148,7 +135,6 @@ const EnhancedSettings = {
             });
         }
 
-        // Language select
         const languageSelect = document.getElementById('languageSelect');
         if (languageSelect) {
             languageSelect.value = this.defaults.language;
@@ -161,7 +147,6 @@ const EnhancedSettings = {
             });
         }
 
-        // Export data button
         const exportDataBtn = document.getElementById('exportDataBtn');
         if (exportDataBtn) {
             exportDataBtn.addEventListener('click', () => {
@@ -169,7 +154,6 @@ const EnhancedSettings = {
             });
         }
 
-        // Reset data button
         const resetDataBtn = document.getElementById('resetDataBtn');
         if (resetDataBtn) {
             resetDataBtn.addEventListener('click', () => {
@@ -179,7 +163,6 @@ const EnhancedSettings = {
             });
         }
 
-        // Listen for system theme changes
         if (window.matchMedia) {
             const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
             mediaQuery.addEventListener('change', () => {
@@ -190,7 +173,6 @@ const EnhancedSettings = {
         }
     },
 
-    // Apply all settings
     applySettings() {
         this.applyTheme();
         this.applyTextSize();
@@ -198,11 +180,9 @@ const EnhancedSettings = {
         this.applyReducedMotion();
     },
 
-    // Apply theme
     applyTheme() {
         const body = document.body;
-        
-        // Remove existing theme classes
+
         body.classList.remove('light-mode', 'dark-mode');
         
         if (this.defaults.theme === 'light') {
@@ -214,7 +194,6 @@ const EnhancedSettings = {
         }
     },
 
-    // Apply system theme preference
     applySystemTheme() {
         const body = document.body;
         body.classList.remove('light-mode', 'dark-mode');
@@ -226,20 +205,16 @@ const EnhancedSettings = {
         }
     },
 
-    // Apply text size
     applyTextSize() {
         const body = document.body;
-        
-        // Remove existing text size classes
+
         body.classList.remove('text-small', 'text-normal', 'text-large', 'text-xlarge');
-        
-        // Apply new text size
+
         if (this.defaults.textSize !== 'normal') {
             body.classList.add(`text-${this.defaults.textSize}`);
         }
     },
 
-    // Apply high contrast
     applyHighContrast() {
         const body = document.body;
         
@@ -250,7 +225,6 @@ const EnhancedSettings = {
         }
     },
 
-    // Apply reduced motion
     applyReducedMotion() {
         const body = document.body;
         
@@ -261,7 +235,6 @@ const EnhancedSettings = {
         }
     },
 
-    // Export data as JSON
     exportData() {
         const dataToExport = {
             user: AppData.user,
@@ -286,12 +259,9 @@ const EnhancedSettings = {
         Navigation.showNotification('Data exported successfully!', 'success', 3000);
     },
 
-    // Reset all data
     resetAllData() {
-        // Clear localStorage
         localStorage.clear();
         
-        // Reset settings to defaults
         this.defaults = {
             theme: 'dark',
             textSize: 'normal',
@@ -301,8 +271,7 @@ const EnhancedSettings = {
             sound: true,
             language: 'en'
         };
-        
-        // Reload page
+
         Navigation.showNotification('All data has been reset. Reloading...', 'success', 2000);
         
         setTimeout(() => {
@@ -310,18 +279,15 @@ const EnhancedSettings = {
         }, 2000);
     },
 
-    // Get current settings
     getSettings() {
         return { ...this.defaults };
     },
 
-    // Update specific setting
     updateSetting(key, value) {
         if (this.defaults.hasOwnProperty(key)) {
             this.defaults[key] = value;
             this.saveSettings();
-            
-            // Apply the specific setting
+
             switch(key) {
                 case 'theme':
                     this.applyTheme();
@@ -340,29 +306,19 @@ const EnhancedSettings = {
     }
 };
 
-// Initialize settings when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Wait a bit for other modules to load
     setTimeout(() => {
         EnhancedSettings.init();
     }, 100);
 });
 
-// Make available globally
 if (typeof window !== 'undefined') {
     window.EnhancedSettings = EnhancedSettings;
 }
 
-// ===================================
-// SETTINGS BUTTON HANDLER
-// Add this to navigation.js or keep here
-// ===================================
-
-// Open settings modal and populate values
 function openSettingsModal() {
     Navigation.openModal('settingsModal');
-    
-    // Populate all form fields with current values
+
     const themeSelect = document.getElementById('themeSelect');
     if (themeSelect && EnhancedSettings) {
         themeSelect.value = EnhancedSettings.defaults.theme;
@@ -406,7 +362,6 @@ function openSettingsModal() {
 
 const DemoModeIndicator = {
     init() {
-        // Add demo mode section to settings if demo is enabled
         if (window.DEMO_MODE && window.DEMO_MODE.enabled) {
             this.addDemoModeSection();
             this.addDemoModeIndicator();
@@ -414,11 +369,9 @@ const DemoModeIndicator = {
     },
 
     addDemoModeSection() {
-        // Find the app info section (last section)
         const settingsContent = document.querySelector('.settings-content');
         if (!settingsContent) return;
 
-        // Create demo mode section
         const demoSection = document.createElement('div');
         demoSection.className = 'settings-section';
         demoSection.innerHTML = `
@@ -453,14 +406,13 @@ const DemoModeIndicator = {
 
             <div style="padding: 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 0.5rem; border: 1px solid rgba(139, 92, 246, 0.2);">
                 <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0; line-height: 1.6;">
-                    <strong style="color: var(--primary-light);">💡 Note:</strong> 
-                    Demo data automatically reloads on page refresh. 
+                    <strong style="color: var(--primary-light);">💡 Note:</strong>
+                    Demo data automatically reloads on page refresh.
                     To disable, set <code style="background: var(--bg-input); padding: 0.125rem 0.375rem; border-radius: 0.25rem;">DEMO_MODE.enabled = false</code> in mock-data.js
                 </p>
             </div>
         `;
 
-        // Insert before the About section
         const aboutSection = Array.from(settingsContent.children)
             .find(section => section.querySelector('h3')?.textContent === 'About');
         
@@ -470,7 +422,6 @@ const DemoModeIndicator = {
             settingsContent.appendChild(demoSection);
         }
 
-        // Add event listeners
         const reloadDemoBtn = document.getElementById('reloadDemoBtn');
         const clearDemoBtn = document.getElementById('clearDemoBtn');
 
@@ -494,11 +445,9 @@ const DemoModeIndicator = {
     },
 
     addDemoModeIndicator() {
-        // Add a small indicator badge to the settings button
         const settingsBtn = document.getElementById('settingsBtn');
         if (!settingsBtn) return;
 
-        // Create demo indicator
         const indicator = document.createElement('span');
         indicator.className = 'demo-indicator';
         indicator.innerHTML = '🎬';
@@ -519,7 +468,6 @@ const DemoModeIndicator = {
             animation: demoPulse 2s ease infinite;
         `;
 
-        // Add pulsing animation
         const style = document.createElement('style');
         style.textContent = `
             @keyframes demoPulse {
@@ -529,18 +477,15 @@ const DemoModeIndicator = {
         `;
         document.head.appendChild(style);
 
-        // Make settings button position relative
         settingsBtn.style.position = 'relative';
         settingsBtn.appendChild(indicator);
     }
 };
 
-// Initialize demo mode UI when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         DemoModeIndicator.init();
     }, 1000);
 });
 
-// Make available globally
 window.DemoModeIndicator = DemoModeIndicator;

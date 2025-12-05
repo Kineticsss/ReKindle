@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="css/enhanced-features.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="main-nav">
         <div class="nav-container">
             <div class="logo">
@@ -36,9 +35,7 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="main-content">
-        <!-- Dashboard Page -->
         <section id="dashboard" class="page active">
             <div class="page-header">
                 <h1 class="welcome-text">Welcome back, <span id="userName">Friend</span>! 👋</h1>
@@ -112,14 +109,17 @@
                     <button class="action-btn primary" id="logCravingBtn">
                         <span class="btn-icon">📝</span>
                         <span class="btn-text">Log Craving</span>
+                        <p class="btn-subtext">Alt + L</p>
                     </button>
                     <button class="action-btn secondary" id="breathingBtn">
                         <span class="btn-icon">🫁</span>
                         <span class="btn-text">Breathing Exercise</span>
+                        <p class="btn-subtext">Alt + B</p>
                     </button>
                     <button class="action-btn tertiary" id="motivationQuickBtn">
                         <span class="btn-icon">✨</span>
                         <span class="btn-text">Get Motivated</span>
+                        <p class="btn-subtext">Alt + M</p>
                     </button>
                 </div>
             </div>
@@ -152,7 +152,6 @@
             </div>
         </section>
 
-        <!-- Motivation Page -->
         <section id="motivation" class="page">
             <div class="page-header">
                 <h1>Motivation Wall</h1>
@@ -227,12 +226,6 @@
             </div>
         </section>
 
-        <!-- Progress Page -->
-       <!-- ========================================
-     ADD THESE SECTIONS TO YOUR index.html
-     ======================================== -->
-
-    <!-- 1. ADD ONBOARDING MODAL (After other modals, before closing </body>) -->
     <div class="modal" id="onboardingModal">
         <div class="modal-content">
             <div class="onboarding-header">
@@ -272,14 +265,12 @@
         </div>
     </div>
 
-    <!-- COMPLETELY REPLACE your Progress section in index.html with this -->
     <section id="progress" class="page">
         <div class="page-header">
             <h1>Progress Tracker</h1>
             <p class="tagline">Visualize your journey</p>
         </div>
 
-        <!-- Tabs Navigation -->
         <div class="tabs" role="tablist">
             <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-daily" data-tab="daily">
                 📅 Daily
@@ -295,7 +286,6 @@
             </button>
         </div>
 
-        <!-- Tab Content: Daily -->
         <div class="tab-content active" id="tab-daily" role="tabpanel">
             <div class="stats-summary">
                 <h3>Today's Summary</h3>
@@ -325,16 +315,13 @@
             </div>
         </div>
 
-        <!-- Tab Content: Weekly -->
         <div class="tab-content" id="tab-weekly" role="tabpanel">
             <h3>This Week's Progress</h3>
-            
-            <!-- Interactive Chart -->
+
             <div class="chart-container">
                 <canvas id="weeklyChart" width="800" height="400"></canvas>
             </div>
-            
-            <!-- Chart Legend -->
+
             <div class="chart-legend">
                 <div class="legend-item">
                     <span class="legend-color" style="background-color: #8B5CF6;"></span>
@@ -345,8 +332,7 @@
                     <span>Resisted</span>
                 </div>
             </div>
-            
-            <!-- Weekly Summary Stats -->
+
             <div class="weekly-summary">
                 <div class="summary-card">
                     <span class="summary-icon">📊</span>
@@ -370,8 +356,7 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Insights Section -->
+
             <div class="insights-section">
                 <h4>📈 Weekly Insights</h4>
                 <div id="weeklyInsights" class="insights-list">
@@ -382,7 +367,6 @@
             </div>
         </div>
 
-        <!-- Tab Content: Monthly -->
         <div class="tab-content" id="tab-monthly" role="tabpanel">
             <h3>Monthly Overview</h3>
             
@@ -416,7 +400,6 @@
             </div>
         </div>
 
-        <!-- Tab Content: All Time -->
         <div class="tab-content" id="tab-all" role="tabpanel">
             <div class="progress-stats">
                 <div class="progress-card">
@@ -451,7 +434,6 @@
         </div>
     </section>
 
-    <!-- 3. ADD COLLAPSIBLE FAQ SECTION (Add as new page or in dashboard) -->
     <section id="help" class="page">
         <div class="page-header">
             <h1>Help & Tips</h1>
@@ -572,7 +554,6 @@
         </div>
     </section>
 
-        <!-- CalmBot Page -->
         <section id="calmbot" class="page">
             <div class="page-header">
                 <h1>CalmBot 🤖</h1>
@@ -605,7 +586,6 @@
             </div>
         </section>
 
-        <!-- Emergency Page -->
         <section id="emergency" class="page">
             <div class="page-header emergency-header">
                 <h1>Emergency Support</h1>
@@ -677,8 +657,6 @@
         </section>
     </main>
 
-    <!-- Modals -->
-    <!-- Craving Log Modal -->
     <div class="modal" id="cravingModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -731,7 +709,6 @@
         </div>
     </div>
 
-    <!-- Breathing Exercise Modal -->
     <div class="modal" id="breathingModal">
         <div class="modal-content breathing-content">
             <button class="close-modal" data-modal="breathingModal" aria-label="Close">&times;</button>
@@ -746,7 +723,6 @@
         </div>
     </div>
 
-    <!-- Settings Modal -->
 <div class="modal" id="settingsModal" role="dialog" aria-labelledby="settings-title" aria-modal="true">
     <div class="modal-content settings-modal-content">
         <div class="modal-header">
@@ -755,7 +731,6 @@
         </div>
         
         <div class="settings-content">
-            <!-- Personal Settings -->
             <div class="settings-section">
                 <div class="section-header">
                     <span class="section-icon">👤</span>
@@ -790,7 +765,6 @@
                 </div>
             </div>
 
-            <!-- Display Settings -->
             <div class="settings-section">
                 <div class="section-header">
                     <span class="section-icon">🎨</span>
@@ -857,7 +831,6 @@
                 </div>
             </div>
 
-            <!-- Notification Settings -->
             <div class="settings-section">
                 <div class="section-header">
                     <span class="section-icon">🔔</span>
@@ -891,7 +864,6 @@
                 </div>
             </div>
 
-            <!-- Data Management -->
             <div class="settings-section">
                 <div class="section-header">
                     <span class="section-icon">💾</span>
@@ -923,7 +895,6 @@
                 </div>
             </div>
 
-            <!-- App Info -->
             <div class="settings-section">
                 <div class="section-header">
                     <span class="section-icon">ℹ️</span>

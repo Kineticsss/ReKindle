@@ -1,7 +1,3 @@
-// ===================================
-// NAVIGATION MODULE
-// ===================================
-
 const Navigation = {
     currentPage: 'dashboard',
 
@@ -11,7 +7,6 @@ const Navigation = {
         this.setupModals();
     },
 
-    // Setup navigation links
     setupNavLinks() {
         const navLinks = document.querySelectorAll('.nav-link');
         
@@ -21,32 +16,26 @@ const Navigation = {
                 const page = link.getAttribute('data-page');
                 this.navigateTo(page);
                 
-                // Close mobile menu if open
                 const navMenu = document.getElementById('navMenu');
                 navMenu.classList.remove('active');
             });
         });
     },
 
-    // Navigate to a page
     navigateTo(pageName) {
-        // Hide all pages
         const pages = document.querySelectorAll('.page');
         pages.forEach(page => page.classList.remove('active'));
         
-        // Show selected page
         const targetPage = document.getElementById(pageName);
         if (targetPage) {
             targetPage.classList.add('active');
             targetPage.classList.add('page-enter');
             
-            // Remove animation class after completion
             setTimeout(() => {
                 targetPage.classList.remove('page-enter');
             }, 400);
         }
         
-        // Update active nav link
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             if (link.getAttribute('data-page') === pageName) {
@@ -58,14 +47,11 @@ const Navigation = {
         
         this.currentPage = pageName;
         
-        // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
         
-        // Update page content if needed
         this.updatePageContent(pageName);
     },
 
-    // Update page content when navigating
     updatePageContent(pageName) {
         switch(pageName) {
             case 'dashboard':
@@ -79,18 +65,14 @@ const Navigation = {
                 }
                 break;
             case 'motivation':
-                // Motivation page is static, no updates needed
                 break;
             case 'calmbot':
-                // Chat page maintains its state
                 break;
             case 'emergency':
-                // Emergency page is static
                 break;
         }
     },
 
-    // Setup mobile menu toggle
     setupMenuToggle() {
         const menuToggle = document.getElementById('menuToggle');
         const navMenu = document.getElementById('navMenu');
@@ -99,8 +81,7 @@ const Navigation = {
             navMenu.classList.toggle('active');
             menuToggle.classList.toggle('active');
         });
-        
-        // Close menu when clicking outside
+
         document.addEventListener('click', (e) => {
             if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
                 navMenu.classList.remove('active');
@@ -109,9 +90,7 @@ const Navigation = {
         });
     },
 
-    // Setup modal controls
     setupModals() {
-        // Close modal buttons
         const closeButtons = document.querySelectorAll('.close-modal');
         closeButtons.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -119,8 +98,7 @@ const Navigation = {
                 this.closeModal(modalId);
             });
         });
-        
-        // Close modal when clicking outside
+
         const modals = document.querySelectorAll('.modal');
         modals.forEach(modal => {
             modal.addEventListener('click', (e) => {
@@ -129,8 +107,7 @@ const Navigation = {
                 }
             });
         });
-        
-        // ESC key to close modals
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 const activeModal = document.querySelector('.modal.active');
@@ -141,14 +118,12 @@ const Navigation = {
         });
     },
 
-    // Open modal
     openModal(modalId) {
         const modal = document.getElementById(modalId);
         if (modal) {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // Focus first input if exists
+
             const firstInput = modal.querySelector('input, select, textarea');
             if (firstInput) {
                 setTimeout(() => firstInput.focus(), 100);
@@ -156,14 +131,12 @@ const Navigation = {
         }
     },
 
-    // Close modal
     closeModal(modalId) {
         const modal = document.getElementById(modalId);
         if (modal) {
             modal.classList.remove('active');
             document.body.style.overflow = '';
             
-            // Reset forms in modal
             const form = modal.querySelector('form');
             if (form) {
                 form.reset();
@@ -171,9 +144,7 @@ const Navigation = {
         }
     },
 
-    // Show notification
     showNotification(message, type = 'success', duration = 3000) {
-        // Create notification element
         const notification = document.createElement('div');
         notification.className = `notification notification-${type} notification-enter`;
         notification.style.cssText = `
@@ -192,8 +163,7 @@ const Navigation = {
         notification.textContent = message;
         
         document.body.appendChild(notification);
-        
-        // Remove after duration
+
         setTimeout(() => {
             notification.classList.add('notification-exit');
             setTimeout(() => {
@@ -202,7 +172,6 @@ const Navigation = {
         }, duration);
     },
 
-    // Confirm dialog
     confirm(message, callback) {
         if (confirm(message)) {
             callback();
@@ -210,41 +179,35 @@ const Navigation = {
     }
 };
 
-// Quick action button handlers
 document.addEventListener('DOMContentLoaded', () => {
     Navigation.init();
-    
-    // Log craving button
+
     const logCravingBtn = document.getElementById('logCravingBtn');
     if (logCravingBtn) {
         logCravingBtn.addEventListener('click', () => {
             Navigation.openModal('cravingModal');
         });
     }
-    
-    // Breathing button
+
     const breathingBtn = document.getElementById('breathingBtn');
     if (breathingBtn) {
         breathingBtn.addEventListener('click', () => {
             Navigation.openModal('breathingModal');
         });
     }
-    
-    // Quick motivation button
+
     const motivationQuickBtn = document.getElementById('motivationQuickBtn');
     if (motivationQuickBtn) {
         motivationQuickBtn.addEventListener('click', () => {
             Navigation.navigateTo('motivation');
         });
     }
-    
-    // Settings button
+
     const settingsBtn = document.getElementById('settingsBtn');
     if (settingsBtn) {
         settingsBtn.addEventListener('click', () => {
             Navigation.openModal('settingsModal');
-            
-            // Populate settings
+
             const userNameInput = document.getElementById('userNameInput');
             if (userNameInput) {
                 userNameInput.value = AppData.user.name;
@@ -266,31 +229,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
-    // Emergency breathing button
+
     const breathingEmergency = document.querySelector('.breathing-emergency');
     if (breathingEmergency) {
         breathingEmergency.addEventListener('click', () => {
             Navigation.openModal('breathingModal');
         });
     }
-    
-    // Emergency calmbot button
+
     const calmbotEmergency = document.querySelector('.calmbot-emergency');
     if (calmbotEmergency) {
         calmbotEmergency.addEventListener('click', () => {
             Navigation.navigateTo('calmbot');
         });
     }
-    
-    // Settings form handling
+
     const userNameInput = document.getElementById('userNameInput');
     if (userNameInput) {
         userNameInput.addEventListener('change', (e) => {
             AppData.user.name = e.target.value || 'Friend';
             AppData.save();
-            
-            // Update display
+
             const userNameDisplay = document.getElementById('userName');
             if (userNameDisplay) {
                 userNameDisplay.textContent = AppData.user.name;
@@ -324,16 +283,14 @@ document.addEventListener('DOMContentLoaded', () => {
             AppData.save();
         });
     }
-    
-    // Reset data button
+
     const resetDataBtn = document.getElementById('resetDataBtn');
     if (resetDataBtn) {
         resetDataBtn.addEventListener('click', () => {
             AppData.resetAllData();
         });
     }
-    
-    // Add contact button
+
     const addContactBtn = document.getElementById('addContactBtn');
     if (addContactBtn) {
         addContactBtn.addEventListener('click', () => {
@@ -350,8 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     
                     Navigation.showNotification('Contact added!', 'success');
-                    
-                    // Update contacts list
+
                     if (window.App) {
                         window.App.updateEmergencyPage();
                     }
@@ -361,7 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Export for use in other modules
 if (typeof window !== 'undefined') {
     window.Navigation = Navigation;
 }

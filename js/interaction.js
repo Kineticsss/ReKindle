@@ -21,8 +21,7 @@ const AdvancedInteractions = {
     setupKeyboardShortcuts() {
         // Alt+D = Dashboard
         // Alt+L = Log Craving
-        // Alt+B = Breathing
-        // etc.
+        // Alt+B = Breathing Exercise
     },
     
     setupSwipeGestures() {

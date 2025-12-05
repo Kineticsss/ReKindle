@@ -1,7 +1,3 @@
-// ===================================
-// CALMBOT CHAT MODULE
-// ===================================
-
 const CalmBot = {
     responses: {
         struggling: [
@@ -67,7 +63,6 @@ const CalmBot = {
         this.setupQuickResponses();
     },
 
-    // Setup chat functionality
     setupChat() {
         const chatInput = document.getElementById('chatInput');
         const sendBtn = document.getElementById('sendBtn');
@@ -87,7 +82,6 @@ const CalmBot = {
         }
     },
 
-    // Setup quick response buttons
     setupQuickResponses() {
         const quickBtns = document.querySelectorAll('.quick-response-btn');
 
@@ -99,31 +93,25 @@ const CalmBot = {
         });
     },
 
-    // Send user message
     sendMessage() {
         const chatInput = document.getElementById('chatInput');
         const message = chatInput.value.trim();
 
         if (!message) return;
 
-        // Add user message
         this.addMessage(message, false);
 
-        // Clear input
         chatInput.value = '';
 
-        // Show typing indicator
         this.showTypingIndicator();
 
-        // Get bot response after delay
         setTimeout(() => {
             this.hideTypingIndicator();
             const response = this.generateResponse(message);
             this.addMessage(response, true);
-        }, 1000 + Math.random() * 1000); // Random delay for realism
+        }, 1000 + Math.random() * 1000);
     },
 
-    // Handle quick response buttons
     handleQuickResponse(type) {
         const messages = {
             struggling: "I'm struggling with cravings right now.",
@@ -135,10 +123,8 @@ const CalmBot = {
         const userMessage = messages[type];
         this.addMessage(userMessage, false);
 
-        // Show typing indicator
         this.showTypingIndicator();
 
-        // Get response
         setTimeout(() => {
             this.hideTypingIndicator();
             const response = this.getResponseByType(type);
@@ -146,7 +132,6 @@ const CalmBot = {
         }, 1000);
     },
 
-    // Add message to chat
     addMessage(message, isBot) {
         const chatMessages = document.getElementById('chatMessages');
         if (!chatMessages) return;
@@ -164,11 +149,9 @@ const CalmBot = {
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // Save to history
         AppData.addChatMessage(message, isBot);
     },
 
-    // Show typing indicator
     showTypingIndicator() {
         const chatMessages = document.getElementById('chatMessages');
         if (!chatMessages) return;
@@ -192,7 +175,6 @@ const CalmBot = {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     },
 
-    // Hide typing indicator
     hideTypingIndicator() {
         const typingIndicator = document.getElementById('typingIndicator');
         if (typingIndicator) {
@@ -200,55 +182,44 @@ const CalmBot = {
         }
     },
 
-    // Generate response based on message
     generateResponse(message) {
         const lowerMessage = message.toLowerCase();
 
-        // Check for emergency keywords first
         if (this.containsKeywords(lowerMessage, this.keywords.emergency)) {
             return this.getRandomResponse(this.responses.emergency);
         }
 
-        // Check for relapse keywords
         if (this.containsKeywords(lowerMessage, this.keywords.relapse)) {
             return this.getRandomResponse(this.responses.relapse);
         }
 
-        // Check for gratitude
         if (this.containsKeywords(lowerMessage, this.keywords.gratitude)) {
             return this.getRandomResponse(this.responses.gratitude);
         }
 
-        // Check for struggling
         if (this.containsKeywords(lowerMessage, this.keywords.struggling)) {
             return this.getRandomResponse(this.responses.struggling);
         }
 
-        // Check for tips
         if (this.containsKeywords(lowerMessage, this.keywords.tips)) {
             return this.getRandomResponse(this.responses.tips);
         }
 
-        // Check for motivation
         if (this.containsKeywords(lowerMessage, this.keywords.motivation)) {
             return this.getRandomResponse(this.responses.motivation);
         }
 
-        // Check for good/positive
         if (this.containsKeywords(lowerMessage, this.keywords.good)) {
             return this.getRandomResponse(this.responses.good);
         }
 
-        // Add stats if user asks about progress
         if (lowerMessage.includes('progress') || lowerMessage.includes('stats') || lowerMessage.includes('streak')) {
             return this.generateStatsResponse();
         }
 
-        // Default response
         return this.getRandomResponse(this.responses.default);
     },
 
-    // Get response by type
     getResponseByType(type) {
         if (this.responses[type]) {
             return this.getRandomResponse(this.responses[type]);
@@ -256,17 +227,14 @@ const CalmBot = {
         return this.getRandomResponse(this.responses.default);
     },
 
-    // Check if message contains keywords
     containsKeywords(message, keywords) {
         return keywords.some(keyword => message.includes(keyword));
     },
 
-    // Get random response from array
     getRandomResponse(responses) {
         return responses[Math.floor(Math.random() * responses.length)];
     },
 
-    // Generate stats response
     generateStatsResponse() {
         const stats = AppData.stats;
         let response = "Let me share your progress with you! 📊\n\n";
@@ -292,31 +260,26 @@ const CalmBot = {
         return response;
     },
 
-    // Load chat history
     loadChatHistory() {
         const chatMessages = document.getElementById('chatMessages');
         if (!chatMessages) return;
 
-        // Clear existing messages except the initial one
         const initialMessage = chatMessages.querySelector('.chat-message');
         chatMessages.innerHTML = '';
         if (initialMessage) {
             chatMessages.appendChild(initialMessage);
         }
 
-        // Load history
         AppData.chatHistory.forEach(msg => {
             this.addMessage(msg.message, msg.isBot);
         });
     }
 };
 
-// Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
     CalmBot.init();
 });
 
-// Export for use in other modules
 if (typeof window !== 'undefined') {
     window.CalmBot = CalmBot;
 }

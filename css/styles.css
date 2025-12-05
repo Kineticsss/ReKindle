@@ -1,11 +1,3 @@
-/* ===================================
-   ReKindle - Main Styles
-   HCI Final Project
-   =================================== */
-
-/* ===================================
-   RESET & BASE STYLES
-   =================================== */
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +5,6 @@
 }
 
 :root {
-    /* Color Palette - Purple theme for calm & transformation */
     --primary-purple: #8B5CF6;
     --primary-dark: #6D28D9;
     --primary-light: #A78BFA;
@@ -21,38 +12,32 @@
     --accent-green: #10B981;
     --accent-blue: #3B82F6;
     --accent-red: #EF4444;
-    
-    /* Dark Mode Colors */
+
     --bg-dark: #0F0F1E;
     --bg-card: #1A1A2E;
     --bg-card-hover: #252540;
     --bg-input: #16162A;
-    
-    /* Text Colors */
+
     --text-primary: #F9FAFB;
     --text-secondary: #D1D5DB;
     --text-muted: #9CA3AF;
-    
-    /* Spacing */
+
     --space-xs: 0.5rem;
     --space-sm: 1rem;
     --space-md: 1.5rem;
     --space-lg: 2rem;
     --space-xl: 3rem;
-    
-    /* Border Radius */
+
     --radius-sm: 0.5rem;
     --radius-md: 1rem;
     --radius-lg: 1.5rem;
     --radius-full: 9999px;
-    
-    /* Shadows */
+
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
     --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.4);
-    
-    /* Transitions */
+
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
@@ -66,9 +51,6 @@ body {
     min-height: 100vh;
 }
 
-/* ===================================
-   NAVIGATION
-   =================================== */
 .main-nav {
     background-color: var(--bg-card);
     border-bottom: 1px solid rgba(139, 92, 246, 0.2);
@@ -161,9 +143,6 @@ body {
     transform: rotate(90deg);
 }
 
-/* ===================================
-   MAIN CONTENT
-   =================================== */
 .main-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -202,9 +181,6 @@ body {
     font-size: 1.1rem;
 }
 
-/* ===================================
-   STATS GRID
-   =================================== */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -253,9 +229,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* ===================================
-   JOURNEY SECTION
-   =================================== */
 .journey-section {
     margin-bottom: var(--space-xl);
 }
@@ -314,9 +287,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* ===================================
-   QUICK ACTIONS
-   =================================== */
 .quick-actions {
     margin-bottom: var(--space-xl);
 }
@@ -369,9 +339,6 @@ body {
     font-weight: 600;
 }
 
-/* ===================================
-   ACHIEVEMENTS
-   =================================== */
 .achievements-preview {
     margin-bottom: var(--space-xl);
 }
@@ -424,9 +391,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* ===================================
-   BUTTONS
-   =================================== */
 button {
     font-family: inherit;
 }
@@ -466,9 +430,6 @@ button {
     background-color: #DC2626;
 }
 
-/* ===================================
-   EMPTY STATES
-   =================================== */
 .empty-state {
     text-align: center;
     color: var(--text-muted);
@@ -478,9 +439,6 @@ button {
     border: 2px dashed rgba(139, 92, 246, 0.2);
 }
 
-/* ===================================
-   RESPONSIVE DESIGN
-   =================================== */
 @media (max-width: 768px) {
     .menu-toggle {
         display: flex;

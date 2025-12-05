@@ -3,24 +3,21 @@
     gap: var(--space-xs);
     margin-bottom: var(--space-lg);
     border-bottom: 2px solid rgba(139, 92, 246, 0.2);
-    overflow-x: visible; /* Changed from auto */
-    overflow-y: visible; /* Changed from auto */
+    overflow-x: visible;
+    overflow-y: visible;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    
-    /* Hide scrollbar completely */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-/* Hide scrollbar on Chrome/Safari */
 .tabs::-webkit-scrollbar {
     display: none;
     width: 0;
     height: 0;
 }
 
-/* Make tabs fit better on desktop */
 .tab-btn {
     padding: var(--space-sm) var(--space-md);
     background: none;
@@ -37,7 +34,6 @@
     flex-shrink: 0;
 }
 
-/* Better tab hover and active states */
 .tab-btn:hover {
     color: var(--primary-light);
     background-color: rgba(139, 92, 246, 0.1);

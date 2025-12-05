@@ -1,7 +1,3 @@
-// ===================================
-// MAIN APPLICATION MODULE
-// ===================================
-
 const App = {
     init() {
         console.log('ReKindle App Initialized');
@@ -9,28 +5,23 @@ const App = {
         this.updateProgressPage();
         this.updateEmergencyPage();
         this.loadAchievements();
-        
-        // Update every minute
+
         setInterval(() => {
             this.updateDashboard();
         }, 60000);
     },
 
-    // Update dashboard with current data
     updateDashboard() {
-        // Update user name
         const userNameEl = document.getElementById('userName');
         if (userNameEl) {
             userNameEl.textContent = AppData.user.name;
         }
 
-        // Update stats
         this.updateStats();
         this.updateJourneyProgress();
         this.loadAchievements();
     },
 
-    // Update stats cards
     updateStats() {
         const smokingStreakEl = document.getElementById('smokingStreak');
         const drinkingStreakEl = document.getElementById('drinkingStreak');
@@ -54,7 +45,6 @@ const App = {
         }
     },
 
-    // Animate number change
     animateNumber(element, targetValue, prefix = '') {
         const currentValue = parseInt(element.textContent.replace(/[^0-9]/g, '')) || 0;
         
@@ -81,14 +71,12 @@ const App = {
         }, stepDuration);
     },
 
-    // Update journey progress bars
     updateJourneyProgress() {
         const smokingProgressEl = document.getElementById('smokingProgress');
         const drinkingProgressEl = document.getElementById('drinkingProgress');
         const smokingStatusEl = document.getElementById('smokingStatus');
         const drinkingStatusEl = document.getElementById('drinkingStatus');
 
-        // Calculate progress (max 30 days = 100%)
         const smokingProgress = Math.min((AppData.stats.smokingStreak / 30) * 100, 100);
         const drinkingProgress = Math.min((AppData.stats.drinkingStreak / 30) * 100, 100);
 
@@ -100,7 +88,6 @@ const App = {
             drinkingProgressEl.style.width = drinkingProgress + '%';
         }
 
-        // Update status text
         if (smokingStatusEl) {
             smokingStatusEl.textContent = this.getStatusText(AppData.stats.smokingStreak);
         }
@@ -110,7 +97,6 @@ const App = {
         }
     },
 
-    // Get status text based on streak
     getStatusText(days) {
         if (days === 0) {
             return 'Just starting your journey';
@@ -125,7 +111,6 @@ const App = {
         }
     },
 
-    // Load achievements
     loadAchievements() {
         const achievementList = document.getElementById('achievementList');
         if (!achievementList) return;
@@ -148,13 +133,11 @@ const App = {
         });
     },
 
-    // Update progress page
     updateProgressPage() {
         this.updateLogHistory();
         this.updateMilestones();
     },
 
-    // Update log history
     updateLogHistory() {
         const logHistoryEl = document.getElementById('logHistory');
         if (!logHistoryEl) return;
@@ -172,7 +155,6 @@ const App = {
         });
     },
 
-    // Update milestones
     updateMilestones() {
         const milestones = document.querySelectorAll('.milestone');
         const maxStreak = Math.max(AppData.stats.smokingStreak, AppData.stats.drinkingStreak);
@@ -189,7 +171,6 @@ const App = {
         });
     },
 
-    // Update emergency page
     updateEmergencyPage() {
         const contactsList = document.getElementById('contactsList');
         if (!contactsList) return;
@@ -218,7 +199,6 @@ const App = {
         });
     },
 
-    // Show welcome message for first-time users
     showWelcomeMessage() {
         const isFirstTime = !localStorage.getItem('rekindle_welcomed');
         
@@ -234,7 +214,6 @@ const App = {
         }
     },
 
-    // Export data as JSON (for backup)
     exportData() {
         const dataStr = JSON.stringify({
             user: AppData.user,
@@ -257,20 +236,17 @@ const App = {
         Navigation.showNotification('Data exported successfully!', 'success');
     },
 
-    // Import data from JSON (for restore)
     importData(file) {
         const reader = new FileReader();
         
         reader.onload = (e) => {
             try {
                 const importedData = JSON.parse(e.target.result);
-                
-                // Validate data structure
+
                 if (!importedData.user || !importedData.stats) {
                     throw new Error('Invalid data format');
                 }
-                
-                // Restore data
+
                 Object.assign(AppData.user, importedData.user);
                 Object.assign(AppData.stats, importedData.stats);
                 AppData.cravingLogs = importedData.cravingLogs || [];
@@ -287,8 +263,7 @@ const App = {
                 AppData.save();
                 
                 Navigation.showNotification('Data imported successfully!', 'success');
-                
-                // Refresh display
+
                 this.updateDashboard();
                 this.updateProgressPage();
                 
@@ -302,7 +277,6 @@ const App = {
     },
 
     clearAllDisplayedData() {
-    // Clear dashboard stats
     const smokingStreakEl = document.getElementById('smokingStreak');
     const drinkingStreakEl = document.getElementById('drinkingStreak');
     const moneySavedEl = document.getElementById('moneySaved');
@@ -313,7 +287,6 @@ const App = {
     if (moneySavedEl) moneySavedEl.textContent = '₱0';
     if (cravingsResistedEl) cravingsResistedEl.textContent = '0';
 
-    // Clear journey progress
     const smokingProgress = document.getElementById('smokingProgress');
     const drinkingProgress = document.getElementById('drinkingProgress');
     const smokingStatus = document.getElementById('smokingStatus');
@@ -324,25 +297,21 @@ const App = {
     if (smokingStatus) smokingStatus.textContent = 'Just starting your journey';
     if (drinkingStatus) drinkingStatus.textContent = 'Just starting your journey';
 
-    // Clear log history
     const logHistory = document.getElementById('logHistory');
     if (logHistory) {
         logHistory.innerHTML = '<p class="empty-state">No logs yet. Start by logging your first craving!</p>';
     }
 
-    // Clear today's logs
     const todayLogHistory = document.getElementById('todayLogHistory');
     if (todayLogHistory) {
         todayLogHistory.innerHTML = '<p class="empty-state">No logs today yet</p>';
     }
 
-    // Clear daily stats
     const todayCravings = document.getElementById('todayCravings');
     const todayResisted = document.getElementById('todayResisted');
     if (todayCravings) todayCravings.textContent = '0';
     if (todayResisted) todayResisted.textContent = '0';
 
-    // Clear weekly stats
     const weeklyTotal = document.getElementById('weeklyTotal');
     const weeklyResisted = document.getElementById('weeklyResisted');
     const weeklyRate = document.getElementById('weeklyRate');
@@ -350,38 +319,32 @@ const App = {
     if (weeklyResisted) weeklyResisted.textContent = '0';
     if (weeklyRate) weeklyRate.textContent = '0%';
 
-    // Clear weekly insights
     const weeklyInsights = document.getElementById('weeklyInsights');
     if (weeklyInsights) {
         weeklyInsights.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: var(--space-md);">No data yet. Start logging to see insights!</p>';
     }
 
-    // Clear chart
     const canvas = document.getElementById('weeklyChart');
     if (canvas) {
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // Redraw empty chart
         if (window.Charts && window.Charts.renderWeeklyChart) {
             window.Charts.renderWeeklyChart();
         }
     }
 
-    // Lock all achievements
     const achievementItems = document.querySelectorAll('.achievement-item');
     achievementItems.forEach(item => {
         item.classList.remove('unlocked');
         item.classList.add('locked');
     });
 
-    // Lock all milestones
     const milestones = document.querySelectorAll('.milestone');
     milestones.forEach(milestone => {
         milestone.classList.remove('completed');
         milestone.classList.add('locked');
     });
 
-    // Clear chat messages (keep only the initial bot message)
     const chatMessages = document.getElementById('chatMessages');
     if (chatMessages) {
         chatMessages.innerHTML = `
@@ -394,13 +357,11 @@ const App = {
         `;
     }
 
-    // Clear trusted contacts
     const contactsList = document.getElementById('contactsList');
     if (contactsList) {
         contactsList.innerHTML = '<p class="empty-state">Add someone you trust for quick access during tough moments</p>';
     }
 
-    // Reset user name display
     const userName = document.getElementById('userName');
     if (userName) userName.textContent = 'Friend';
 
@@ -409,8 +370,7 @@ const App = {
 
     init() {
         console.log('ReKindle App Initialized');
-        
-        // Check if data was just reset
+
         const hasData = localStorage.getItem('rekindle_data');
         if (!hasData) {
             console.log('No data found - starting fresh');
@@ -421,14 +381,12 @@ const App = {
         this.updateProgressPage();
         this.updateEmergencyPage();
         this.loadAchievements();
-        
-        // Update every minute
+
         setInterval(() => {
             this.updateDashboard();
         }, 60000);
     },
 
-    // Generate summary report
     generateSummaryReport() {
         const stats = AppData.stats;
         const achievementProgress = AppData.getAchievementProgress();
@@ -464,21 +422,17 @@ const App = {
     }
 };
 
-// Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Wait for data to be initialized
     setTimeout(() => {
         App.init();
         App.showWelcomeMessage();
     }, 100);
 });
 
-// Make App available globally
 if (typeof window !== 'undefined') {
     window.App = App;
 }
 
-// Service Worker registration for offline support (optional)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')

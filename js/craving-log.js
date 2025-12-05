@@ -1,14 +1,9 @@
-// ===================================
-// CRAVING LOG MODULE
-// ===================================
-
 const CravingLog = {
     init() {
         this.setupForm();
         this.setupIntensitySlider();
     },
 
-    // Setup craving form submission
     setupForm() {
         const cravingForm = document.getElementById('cravingForm');
         
@@ -20,7 +15,6 @@ const CravingLog = {
         }
     },
 
-    // Setup intensity slider display
     setupIntensitySlider() {
         const intensitySlider = document.getElementById('cravingIntensity');
         const intensityValue = document.getElementById('intensityValue');
@@ -32,22 +26,18 @@ const CravingLog = {
         }
     },
 
-    // Handle craving form submission
     handleCravingSubmit() {
-        // Get form values
         const type = document.getElementById('cravingType').value;
         const intensity = parseInt(document.getElementById('cravingIntensity').value);
         const trigger = document.getElementById('cravingTrigger').value;
         const notes = document.getElementById('cravingNotes').value;
         const resisted = document.getElementById('resistedCraving').checked;
 
-        // Validate
         if (!type || !trigger) {
             Navigation.showNotification('Please fill all required fields', 'error');
             return;
         }
 
-        // Create log data
         const logData = {
             type,
             intensity,
@@ -56,10 +46,8 @@ const CravingLog = {
             resisted
         };
 
-        // Add to data
         const newLog = AppData.addCravingLog(logData);
 
-        // Show success message
         if (resisted) {
             Navigation.showNotification('Amazing! You resisted! 💪', 'success');
             this.celebrateResistance();
@@ -67,29 +55,23 @@ const CravingLog = {
             Navigation.showNotification('Logged. Remember, progress isn\'t linear. Keep going! 💚', 'success');
         }
 
-        // Close modal
         Navigation.closeModal('cravingModal');
 
-        // Reset form
         document.getElementById('cravingForm').reset();
         document.getElementById('intensityValue').textContent = '5';
 
-        // Update dashboard
         if (window.App) {
             window.App.updateDashboard();
             window.App.updateProgressPage();
         }
 
-        // Check for new achievements
         const newAchievements = AppData.checkAchievements();
         if (newAchievements.length > 0) {
             this.showAchievementUnlock(newAchievements);
         }
     },
 
-    // Celebrate resistance with animation
     celebrateResistance() {
-        // Add confetti or celebration animation
         const dashboard = document.getElementById('dashboard');
         if (dashboard) {
             dashboard.classList.add('celebrate');
@@ -98,13 +80,11 @@ const CravingLog = {
             }, 600);
         }
 
-        // Play sound if enabled
         if (AppData.user.settings.sound) {
             this.playSuccessSound();
         }
     },
 
-    // Show achievement unlock
     showAchievementUnlock(achievements) {
         achievements.forEach((achievement, index) => {
             setTimeout(() => {
@@ -118,7 +98,6 @@ const CravingLog = {
         });
     },
 
-    // Play success sound (simple beep)
     playSuccessSound() {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioContext.createOscillator();
@@ -137,12 +116,10 @@ const CravingLog = {
         oscillator.stop(audioContext.currentTime + 0.3);
     },
 
-    // Play achievement sound
     playAchievementSound() {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        
-        // Play a pleasant achievement melody
-        const notes = [523.25, 659.25, 783.99]; // C, E, G
+
+        const notes = [523.25, 659.25, 783.99];
         
         notes.forEach((freq, index) => {
             const oscillator = audioContext.createOscillator();
@@ -163,7 +140,6 @@ const CravingLog = {
         });
     },
 
-    // Format log for display
     formatLog(log) {
         const date = new Date(log.timestamp);
         const dateStr = date.toLocaleDateString();
@@ -200,7 +176,6 @@ const CravingLog = {
         `;
     },
 
-    // Get craving statistics
     getCravingStats() {
         const logs = AppData.cravingLogs;
         
@@ -208,11 +183,9 @@ const CravingLog = {
             return null;
         }
 
-        // Calculate average intensity
         const totalIntensity = logs.reduce((sum, log) => sum + log.intensity, 0);
         const avgIntensity = (totalIntensity / logs.length).toFixed(1);
 
-        // Most common trigger
         const triggers = {};
         logs.forEach(log => {
             triggers[log.trigger] = (triggers[log.trigger] || 0) + 1;
@@ -221,7 +194,6 @@ const CravingLog = {
         const mostCommonTrigger = Object.entries(triggers)
             .sort((a, b) => b[1] - a[1])[0];
 
-        // Resistance rate
         const resistedCount = logs.filter(log => log.resisted).length;
         const resistanceRate = Math.round((resistedCount / logs.length) * 100);
 
@@ -234,7 +206,6 @@ const CravingLog = {
         };
     },
 
-    // Get trend data for charts
     getTrendData(days = 7) {
         const now = new Date();
         const trendData = [];
@@ -263,12 +234,10 @@ const CravingLog = {
     }
 };
 
-// Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
     CravingLog.init();
 });
 
-// Export for use in other modules
 if (typeof window !== 'undefined') {
     window.CravingLog = CravingLog;
 }

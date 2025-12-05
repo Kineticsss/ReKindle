@@ -1,7 +1,3 @@
-// ===================================
-// BREATHING EXERCISE MODULE
-// ===================================
-
 const BreathingExercise = {
     isActive: false,
     currentPhase: 0,
@@ -9,7 +5,6 @@ const BreathingExercise = {
         { name: 'Breathe In', duration: 4000, animation: 'breathe-in', text: 'Breathe In...' },
         { name: 'Hold', duration: 4000, animation: 'hold-breath', text: 'Hold...' },
         { name: 'Breathe Out', duration: 4000, animation: 'breathe-out', text: 'Breathe Out...' },
-        { name: 'Hold', duration: 4000, animation: 'hold-breath', text: 'Hold...' }
     ],
     cycleCount: 0,
     maxCycles: 3,
@@ -18,7 +13,6 @@ const BreathingExercise = {
         this.setupButton();
     },
 
-    // Setup start button
     setupButton() {
         const startBtn = document.getElementById('startBreathingBtn');
         
@@ -33,7 +27,6 @@ const BreathingExercise = {
         }
     },
 
-    // Start breathing exercise
     start() {
         this.isActive = true;
         this.currentPhase = 0;
@@ -45,11 +38,9 @@ const BreathingExercise = {
             startBtn.style.backgroundColor = 'var(--accent-red)';
         }
 
-        // Start the first phase
         this.runPhase();
     },
 
-    // Stop breathing exercise
     stop() {
         this.isActive = false;
 
@@ -76,7 +67,6 @@ const BreathingExercise = {
         }
     },
 
-    // Run a breathing phase
     runPhase() {
         if (!this.isActive) return;
 
@@ -85,10 +75,8 @@ const BreathingExercise = {
         const text = document.getElementById('breathingText');
         const instruction = document.getElementById('breathingInstruction');
 
-        // Update UI
         if (circle) {
             circle.className = 'breathing-circle';
-            // Add animation class after a brief delay
             setTimeout(() => {
                 circle.classList.add(phase.animation);
             }, 50);
@@ -102,7 +90,6 @@ const BreathingExercise = {
             instruction.textContent = phase.text;
         }
 
-        // Countdown timer
         let timeLeft = phase.duration / 1000;
         const countdownInterval = setInterval(() => {
             timeLeft--;
@@ -115,23 +102,19 @@ const BreathingExercise = {
             }
         }, 1000);
 
-        // Play sound at start of phase if enabled
         if (AppData.user.settings.sound) {
             this.playBreathingSound(phase.name);
         }
 
-        // Move to next phase
         setTimeout(() => {
             if (!this.isActive) return;
 
             this.currentPhase++;
 
-            // Check if completed a full cycle
             if (this.currentPhase >= this.phases.length) {
                 this.currentPhase = 0;
                 this.cycleCount++;
 
-                // Check if completed all cycles
                 if (this.cycleCount >= this.maxCycles) {
                     this.complete();
                     return;
@@ -142,7 +125,6 @@ const BreathingExercise = {
         }, phase.duration);
     },
 
-    // Complete breathing exercise
     complete() {
         this.isActive = false;
 
@@ -168,10 +150,8 @@ const BreathingExercise = {
             startBtn.style.backgroundColor = 'var(--primary-purple)';
         }
 
-        // Show success notification
         Navigation.showNotification('Breathing exercise completed! 🧘', 'success');
 
-        // Reset after a delay
         setTimeout(() => {
             if (text) {
                 text.textContent = 'Start';
@@ -185,12 +165,10 @@ const BreathingExercise = {
         }, 3000);
     },
 
-    // Get countdown number
     getCountdown(seconds) {
         return Math.ceil(seconds);
     },
 
-    // Play breathing sound
     playBreathingSound(phaseName) {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioContext.createOscillator();
@@ -199,17 +177,16 @@ const BreathingExercise = {
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
 
-        // Different tones for different phases
         let frequency;
         switch (phaseName) {
             case 'Breathe In':
-                frequency = 440; // A note
+                frequency = 440;
                 break;
             case 'Hold':
-                frequency = 523.25; // C note
+                frequency = 523.25;
                 break;
             case 'Breathe Out':
-                frequency = 392; // G note
+                frequency = 392;
                 break;
             default:
                 frequency = 440;
@@ -225,18 +202,15 @@ const BreathingExercise = {
         oscillator.stop(audioContext.currentTime + 0.5);
     },
 
-    // Alternative: Simple box breathing (4-4-4-4)
     startBoxBreathing() {
         this.phases = [
             { name: 'Breathe In', duration: 4000, animation: 'breathe-in', text: 'Breathe In...' },
             { name: 'Hold', duration: 4000, animation: 'hold-breath', text: 'Hold...' },
             { name: 'Breathe Out', duration: 4000, animation: 'breathe-out', text: 'Breathe Out...' },
-            { name: 'Hold', duration: 4000, animation: 'hold-breath', text: 'Hold...' }
         ];
         this.start();
     },
 
-    // Alternative: Relaxing breathing (4-7-8)
     start478Breathing() {
         this.phases = [
             { name: 'Breathe In', duration: 4000, animation: 'breathe-in', text: 'Breathe In...' },
@@ -247,12 +221,10 @@ const BreathingExercise = {
     }
 };
 
-// Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
     BreathingExercise.init();
 });
 
-// Export for use in other modules
 if (typeof window !== 'undefined') {
     window.BreathingExercise = BreathingExercise;
 }
