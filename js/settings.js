@@ -233,12 +233,14 @@ const EnhancedSettings = {
     },
 
     applyReducedMotion() {
-        const body = document.body;
-        
+    const body = document.body;
+    
         if (this.defaults.reducedMotion) {
             body.classList.add('reduced-motion');
+            console.log('✅ Reduced motion ENABLED');
         } else {
             body.classList.remove('reduced-motion');
+            console.log('❌ Reduced motion DISABLED');
         }
     },
 

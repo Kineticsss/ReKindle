@@ -2,6 +2,7 @@ const CravingLog = {
     init() {
         this.setupForm();
         this.setupIntensitySlider();
+        console.log('🔥 CravingLog initialized');
     },
 
     setupForm() {
@@ -19,10 +20,23 @@ const CravingLog = {
         const intensitySlider = document.getElementById('cravingIntensity');
         const intensityValue = document.getElementById('intensityValue');
         
+        console.log('Setting up intensity slider:', { intensitySlider, intensityValue });
+        
         if (intensitySlider && intensityValue) {
+            intensityValue.textContent = intensitySlider.value;
+            console.log('Initial intensity value set to:', intensitySlider.value);
+            
             intensitySlider.addEventListener('input', (e) => {
+                console.log('Slider input:', e.target.value);
                 intensityValue.textContent = e.target.value;
             });
+            
+            intensitySlider.addEventListener('change', (e) => {
+                console.log('Slider change:', e.target.value);
+                intensityValue.textContent = e.target.value;
+            });
+        } else {
+            console.error('❌ Intensity slider or value element not found!');
         }
     },
 
@@ -32,6 +46,8 @@ const CravingLog = {
         const trigger = document.getElementById('cravingTrigger').value;
         const notes = document.getElementById('cravingNotes').value;
         const resisted = document.getElementById('resistedCraving').checked;
+
+        console.log('Submitting craving:', { type, intensity, trigger, notes, resisted });
 
         if (!type || !trigger) {
             Navigation.showNotification('Please fill all required fields', 'error');
@@ -241,3 +257,5 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof window !== 'undefined') {
     window.CravingLog = CravingLog;
 }
+
+console.log('✅ craving-log.js loaded');

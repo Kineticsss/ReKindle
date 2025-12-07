@@ -119,18 +119,25 @@ const Navigation = {
     },
 
     openModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
 
-            const firstInput = modal.querySelector('input, select, textarea');
+    if (modalId === 'cravingModal') {
+        const intensitySlider = document.getElementById('cravingIntensity');
+        const intensityValue = document.getElementById('intensityValue');
+        if (intensitySlider && intensityValue) {
+            intensityValue.textContent = intensitySlider.value;
+        }
+    }
+
+        const firstInput = modal.querySelector('input, select, textarea');
             if (firstInput) {
                 setTimeout(() => firstInput.focus(), 100);
             }
         }
     },
-
     closeModal(modalId) {
         const modal = document.getElementById(modalId);
         if (modal) {

@@ -404,21 +404,43 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-    
-    .breathing-circle {
-        animation: none !important;
-    }
-    
-    .pulse,
-    .glow,
-    .bounce {
-        animation: none !important;
-    }
+}
+
+body.reduced-motion *,
+body.reduced-motion *::before,
+body.reduced-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+}
+
+body.reduced-motion .pulse,
+body.reduced-motion .glow,
+body.reduced-motion .bounce,
+body.reduced-motion .shake,
+body.reduced-motion .rotate,
+body.reduced-motion .spinner,
+body.reduced-motion .breathing-circle::before {
+    animation: none !important;
+}
+
+body.reduced-motion .hover-lift:hover,
+body.reduced-motion .hover-scale:hover,
+body.reduced-motion .stat-card:hover,
+body.reduced-motion .motivation-card:hover,
+body.reduced-motion .tip-card:hover,
+body.reduced-motion .action-btn:hover,
+body.reduced-motion .settings-btn:hover,
+body.reduced-motion .back-to-top:hover {
+    transform: none !important;
+}
+
+    body.reduced-motion button,
+    body.reduced-motion a {
+        transition: background-color 0.15s ease, color 0.15s ease !important;
 }
