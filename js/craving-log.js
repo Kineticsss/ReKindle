@@ -17,29 +17,39 @@ const CravingLog = {
     },
 
     setupIntensitySlider() {
+        this.updateIntensityDisplay();
+        
         const intensitySlider = document.getElementById('cravingIntensity');
-        const intensityValue = document.getElementById('intensityValue');
         
-        console.log('Setting up intensity slider:', { intensitySlider, intensityValue });
-        
-        if (intensitySlider && intensityValue) {
-            intensityValue.textContent = intensitySlider.value;
-            console.log('Initial intensity value set to:', intensitySlider.value);
-            
+        if (intensitySlider) {
             intensitySlider.addEventListener('input', (e) => {
-                console.log('Slider input:', e.target.value);
-                intensityValue.textContent = e.target.value;
+                const intensityValue = document.getElementById('intensityValue');
+                if (intensityValue) {
+                    intensityValue.textContent = e.target.value;
+                }
             });
             
             intensitySlider.addEventListener('change', (e) => {
-                console.log('Slider change:', e.target.value);
-                intensityValue.textContent = e.target.value;
+                const intensityValue = document.getElementById('intensityValue');
+                if (intensityValue) {
+                    intensityValue.textContent = e.target.value;
+                }
             });
+            
+            console.log('✅ Intensity slider initialized');
         } else {
-            console.error('❌ Intensity slider or value element not found!');
+            console.error('❌ Intensity slider not found');
         }
     },
-
+    
+    updateIntensityDisplay() {
+        const intensitySlider = document.getElementById('cravingIntensity');
+        const intensityValue = document.getElementById('intensityValue');
+        
+        if (intensitySlider && intensityValue) {
+            intensityValue.textContent = intensitySlider.value;
+        }
+    },
     handleCravingSubmit() {
         const type = document.getElementById('cravingType').value;
         const intensity = parseInt(document.getElementById('cravingIntensity').value);
