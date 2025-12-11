@@ -5,6 +5,62 @@ const Navigation = {
         this.setupNavLinks();
         this.setupMenuToggle();
         this.setupModals();
+        console.log('✅ Navigation initialized');
+    },
+
+    setupMenuToggle() {
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (!menuToggle) {
+            console.error('❌ Menu toggle button not found!');
+            return;
+        }
+        
+        if (!navMenu) {
+            console.error('❌ Nav menu not found!');
+            return;
+        }
+
+        console.log('✅ Menu toggle and nav menu found');
+
+        menuToggle.addEventListener('click', (e) => {
+            console.log('🍔 Hamburger clicked!');
+            
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            
+            const isActive = navMenu.classList.contains('active');
+            console.log('Menu is now:', isActive ? 'OPEN' : 'CLOSED');
+            
+            if (isActive) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            const isClickInsideMenu = navMenu.contains(e.target);
+            const isClickOnToggle = menuToggle.contains(e.target);
+            
+            if (!isClickInsideMenu && !isClickOnToggle && navMenu.classList.contains('active')) {
+                console.log('📍 Clicked outside menu - closing');
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        console.log('✅ Menu toggle event listeners attached');
     },
 
     setupNavLinks() {
@@ -15,11 +71,19 @@ const Navigation = {
                 e.preventDefault();
                 const page = link.getAttribute('data-page');
                 this.navigateTo(page);
-                
+
                 const navMenu = document.getElementById('navMenu');
-                navMenu.classList.remove('active');
+                const menuToggle = document.getElementById('menuToggle');
+                
+                if (navMenu && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
             });
         });
+
+        console.log('✅ Nav links initialized:', navLinks.length);
     },
 
     navigateTo(pageName) {
@@ -73,23 +137,6 @@ const Navigation = {
         }
     },
 
-    setupMenuToggle() {
-        const menuToggle = document.getElementById('menuToggle');
-        const navMenu = document.getElementById('navMenu');
-        
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-            }
-        });
-    },
-
     setupModals() {
         const closeButtons = document.querySelectorAll('.close-modal');
         closeButtons.forEach(btn => {
@@ -119,23 +166,22 @@ const Navigation = {
     },
 
     openModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
 
-        if (modalId === 'cravingModal') {
-            setTimeout(() => {
-                const intensitySlider = document.getElementById('cravingIntensity');
-                const intensityValue = document.getElementById('intensityValue');
-                if (intensitySlider && intensityValue) {
-                    intensityValue.textContent = intensitySlider.value;
-                    console.log('✅ Intensity display updated:', intensitySlider.value);
-                }
-            }, 50);
-        }
+            if (modalId === 'cravingModal') {
+                setTimeout(() => {
+                    const intensitySlider = document.getElementById('cravingIntensity');
+                    const intensityValue = document.getElementById('intensityValue');
+                    if (intensitySlider && intensityValue) {
+                        intensityValue.textContent = intensitySlider.value;
+                    }
+                }, 50);
+            }
 
-        const firstInput = modal.querySelector('input, select, textarea');
+            const firstInput = modal.querySelector('input, select, textarea');
             if (firstInput) {
                 setTimeout(() => firstInput.focus(), 100);
             }
@@ -153,6 +199,13 @@ const Navigation = {
                 form.reset();
             }
         }
+    },
+
+    closeAllModals() {
+        const modals = document.querySelectorAll('.modal.active');
+        modals.forEach(modal => {
+            this.closeModal(modal.id);
+        });
     },
 
     showNotification(message, type = 'success', duration = 3000) {
@@ -191,6 +244,7 @@ const Navigation = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 DOM loaded - initializing Navigation...');
     Navigation.init();
 
     const logCravingBtn = document.getElementById('logCravingBtn');
@@ -331,3 +385,15 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof window !== 'undefined') {
     window.Navigation = Navigation;
 }
+
+window.debugMenu = function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    console.log('=== MENU DEBUG ===');
+    console.log('Toggle button exists:', !!menuToggle);
+    console.log('Nav menu exists:', !!navMenu);
+    console.log('Menu classes:', navMenu?.classList);
+    console.log('Menu is active:', navMenu?.classList.contains('active'));
+    console.log('==================');
+};
