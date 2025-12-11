@@ -497,9 +497,9 @@ button {
         display: none !important;
     }
     
-    .nav-menu {
+        .nav-menu {
         position: fixed;
-        top: 100%;
+        top: 60px;
         left: 0;
         right: 0;
         background-color: var(--bg-card);
@@ -512,11 +512,16 @@ button {
         z-index: 999;
         border-bottom: 1px solid rgba(139, 92, 246, 0.2);
         gap: 0;
+
+        display: flex !important;
+        visibility: visible !important;
     }
     
     .nav-menu.active {
         max-height: 500px;
         padding: var(--space-sm) 0;
+        visibility: visible;
+        display: flex !important;
     }
     
     .nav-menu li {

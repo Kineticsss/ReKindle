@@ -9,59 +9,76 @@ const Navigation = {
     },
 
     setupMenuToggle() {
-        const menuToggle = document.getElementById('menuToggle');
-        const navMenu = document.getElementById('navMenu');
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (!menuToggle) {
+        console.error('❌ Menu toggle button not found!');
+        return;
+    }
+    
+    if (!navMenu) {
+        console.error('❌ Nav menu not found!');
+        return;
+    }
+
+    console.log('✅ Menu toggle and nav menu found');
+    console.log('Nav menu element:', navMenu);
+    console.log('Nav menu classes:', navMenu.classList);
+
+    menuToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         
-        if (!menuToggle) {
-            console.error('❌ Menu toggle button not found!');
-            return;
-        }
+        console.log('🍔 Hamburger clicked!');
         
-        if (!navMenu) {
-            console.error('❌ Nav menu not found!');
-            return;
+        const wasActive = navMenu.classList.contains('active');
+        navMenu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+        
+        const isActive = navMenu.classList.contains('active');
+        console.log('Menu state changed from', wasActive, 'to', isActive);
+        console.log('Current classes:', navMenu.className);
+        
+        if (isActive) {
+            document.body.style.overflow = 'hidden';
+            navMenu.style.display = 'flex'; // Force display
+        } else {
+            document.body.style.overflow = '';
+            // Don't hide immediately, let transition finish
+            setTimeout(() => {
+                if (!navMenu.classList.contains('active')) {
+                    navMenu.style.display = '';
+                }
+            }, 400);
         }
+    });
 
-        console.log('✅ Menu toggle and nav menu found');
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        const isClickInsideMenu = navMenu.contains(e.target);
+        const isClickOnToggle = menuToggle.contains(e.target);
+        
+        if (!isClickInsideMenu && !isClickOnToggle && navMenu.classList.contains('active')) {
+            console.log('📍 Clicked outside menu - closing');
+            navMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
 
-        menuToggle.addEventListener('click', (e) => {
-            console.log('🍔 Hamburger clicked!');
-            
-            navMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-            
-            const isActive = navMenu.classList.contains('active');
-            console.log('Menu is now:', isActive ? 'OPEN' : 'CLOSED');
-            
-            if (isActive) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        });
+    // Close menu on window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            navMenu.classList.remove('active');
+            menuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+            navMenu.style.display = '';
+        }
+    });
 
-        document.addEventListener('click', (e) => {
-            const isClickInsideMenu = navMenu.contains(e.target);
-            const isClickOnToggle = menuToggle.contains(e.target);
-            
-            if (!isClickInsideMenu && !isClickOnToggle && navMenu.classList.contains('active')) {
-                console.log('📍 Clicked outside menu - closing');
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-
-        console.log('✅ Menu toggle event listeners attached');
-    },
+    console.log('✅ Menu toggle event listeners attached');
+},
 
     setupNavLinks() {
         const navLinks = document.querySelectorAll('.nav-link');
